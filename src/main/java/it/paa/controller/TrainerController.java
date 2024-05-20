@@ -79,4 +79,10 @@ public class TrainerController {
                    .build();
         }
     }
+
+    @GET
+    @Path("/top")
+    public Response findTopTrainerWithClients(){
+        return Response.ok(trainerService.findTopTrainerWithMaxClients()).build();
+    }
 }

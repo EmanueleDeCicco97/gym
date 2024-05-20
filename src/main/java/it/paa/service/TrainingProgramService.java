@@ -3,6 +3,7 @@ package it.paa.service;
 import it.paa.model.TrainingProgram;
 import it.paa.repository.TrainingProgramRepository;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
@@ -68,6 +69,13 @@ public class TrainingProgramService implements TrainingProgramRepository {
         if (trainingProgram != null) {
             entityManager.remove(trainingProgram);
         }
+    }
+
+    public List <TrainingProgram> findByTrainingType(String trainingType) {
+        List<TrainingProgram> trainingProgramList = entityManager.createQuery("SELECT tp FROM TrainingProgram tp where tp.trainingType = :trainingType", TrainingProgram.class)
+                .setParameter("trainingType",trainingType)
+                .getResultList();
+        return trainingProgramList;
     }
 
 }

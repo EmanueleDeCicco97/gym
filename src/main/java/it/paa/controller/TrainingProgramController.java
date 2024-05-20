@@ -90,4 +90,12 @@ public class TrainingProgramController {
             return Response.status(Response.Status.NOT_FOUND).type(MediaType.TEXT_PLAIN).entity(e.getMessage()).build();
         }
     }
+
+    @GET
+    @Path("/training/{trainingType}")
+    public List<TrainingProgram> getCustomersByTrainingType(@PathParam("trainingType") String trainingType) {
+        return trainingProgramService.findByTrainingType(trainingType);
+    }
+
+
 }

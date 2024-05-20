@@ -1,13 +1,15 @@
 package it.paa.service;
 
+import it.paa.model.Customer;
 import it.paa.model.Trainer;
+import it.paa.model.TrainingProgram;
 import it.paa.repository.TrainerRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @ApplicationScoped
@@ -69,6 +71,25 @@ public class TrainerService implements TrainerRepository {
         if (trainer != null) {
             entityManager.remove(trainer);
         }
+    }
+
+    public Map<Trainer, Set<Customer>> findTopTrainerWithMaxClients() {
+        Map<Trainer, Set<Customer>> mapResult = new LinkedHashMap<>();
+
+        List<Trainer> trainerList = entityManager.createQuery("SELECT t FROM Trainer t", Trainer.class)
+                .getResultList();
+
+        trainerList.stream()
+                .sorted(Comparator.comparingInt(trainer -> -trainer.getTrainingPrograms().size()))
+                .limit(3)
+                .forEach(trainer -> {
+                    Set<Customer> customers = trainer.getTrainingPrograms().stream()
+                            .map(TrainingProgram::getAssociatedCustomer)
+                            .collect(Collectors.toSet());
+                    mapResult.put(trainer, customers);
+                });
+
+        return mapResult;
     }
 
 }

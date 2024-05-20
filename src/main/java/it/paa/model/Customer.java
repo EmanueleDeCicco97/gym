@@ -95,6 +95,14 @@ public class Customer {
         this.gender = gender;
     }
 
+    public List<TrainingProgram> getTrainingPrograms() {
+        return trainingPrograms;
+    }
+
+    public void setTrainingPrograms(List<TrainingProgram> trainingPrograms) {
+        this.trainingPrograms = trainingPrograms;
+    }
+
     @Override
     public String toString() {
         return "Client{" +
