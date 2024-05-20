@@ -24,12 +24,13 @@ public class Trainer {
     @Column(name = "surname", nullable = false)
     private String surname;
 
-    @NotBlank(message = "specialization cannot be empty")
+    @NotBlank(message = "Specialization cannot be empty")
     @Column(name = "specialization", nullable = false)
     private String specialization;
 
     @OneToMany(mappedBy = "associatedTrainer")
     @JsonBackReference
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private List<TrainingProgram> trainingPrograms;
 
     private Integer workHours;
