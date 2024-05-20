@@ -17,14 +17,18 @@ public class Equipment {
     private Long id;
 
     @NotBlank(message = "Name cannot be empty")
+    @Column(name = "name", nullable = false)
     private String name;
 
     @NotBlank(message = "Description cannot be empty")
+    @Column(name = "description", nullable = false)
     private String description;
 
     @Positive(message = "Availability cannot be negative")
+    @Column(name = "availability", nullable = false)
     private Integer availability;
 
+    @Column(name = "purchase_date")
     private LocalDate purchaseDate;
 
     public Equipment() {

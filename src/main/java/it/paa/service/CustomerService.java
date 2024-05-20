@@ -54,10 +54,6 @@ public class CustomerService implements CustomerRepository {
         // Controllo se il cliente esiste
         Customer existingCustomer = findById(id);
 
-        if (existingCustomer == null) {
-            throw new IllegalArgumentException("Customer with id " + customer.getId() + " not found");
-        }
-
         // Effettua l'aggiornamento del cliente esistente
         existingCustomer.setName(customer.getName());
         existingCustomer.setSurname(customer.getSurname());

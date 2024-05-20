@@ -16,13 +16,16 @@ public class Trainer {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long id;
 
-    @NotBlank(message = "First name cannot be empty")
-    private String firstName;
+    @NotBlank(message = "Name cannot be empty")
+    @Column(name = "name", nullable = false)
+    private String name;
 
-    @NotBlank(message = "Last name cannot be empty")
-    private String lastName;
+    @NotBlank(message = "Surname cannot be empty")
+    @Column(name = "surname", nullable = false)
+    private String surname;
 
     @NotBlank(message = "specialization cannot be empty")
+    @Column(name = "specialization", nullable = false)
     private String specialization;
 
     @OneToMany(mappedBy = "associatedTrainer")
@@ -42,20 +45,20 @@ public class Trainer {
         this.id = id;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getName() {
+        return name;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getSurname() {
+        return surname;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
     public String getSpecialization() {
@@ -64,6 +67,14 @@ public class Trainer {
 
     public void setSpecialization(String specialization) {
         this.specialization = specialization;
+    }
+
+    public List<TrainingProgram> getTrainingPrograms() {
+        return trainingPrograms;
+    }
+
+    public void setTrainingPrograms(List<TrainingProgram> trainingPrograms) {
+        this.trainingPrograms = trainingPrograms;
     }
 
     public Integer getWorkHours() {
@@ -77,11 +88,11 @@ public class Trainer {
     @Override
     public String toString() {
         return "Trainer{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
+                "workHours=" + workHours +
                 ", specialization='" + specialization + '\'' +
-                ", workHours=" + workHours +
+                ", surname='" + surname + '\'' +
+                ", name='" + name + '\'' +
+                ", id=" + id +
                 '}';
     }
 }
