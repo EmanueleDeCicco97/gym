@@ -1,5 +1,8 @@
 package it.paa.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import it.paa.validation.ValidSubscriptionAge;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -15,6 +18,7 @@ public class Customer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long id;
 
     @NotBlank(message = "name cannot be empty")
@@ -36,6 +40,8 @@ public class Customer {
     private Boolean activeSubscription;
 
     @OneToMany(mappedBy = "associatedCustomer")
+    @JsonBackReference
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private List<TrainingProgram> trainingPrograms;
 
     public Customer() {

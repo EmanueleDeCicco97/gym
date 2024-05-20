@@ -1,5 +1,7 @@
 package it.paa.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import it.paa.validation.ValidTrainingIntensity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Positive;
@@ -12,6 +14,7 @@ public class TrainingProgram {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long id;
 
     private String trainingType;
@@ -23,10 +26,12 @@ public class TrainingProgram {
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
+    @JsonManagedReference
     private Customer associatedCustomer;
 
     @ManyToOne
     @JoinColumn(name = "trainer_id")
+    @JsonManagedReference
     private Trainer associatedTrainer;
 
     public TrainingProgram() {

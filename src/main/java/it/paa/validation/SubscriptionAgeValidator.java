@@ -19,7 +19,7 @@ public class SubscriptionAgeValidator implements ConstraintValidator<ValidSubscr
 
         LocalDate birthDate = customer.getDateOfBirth();
         if (birthDate == null) {
-            return true; // This should be validated by @NotNull
+            return true;
         }
 
         int age = Period.between(birthDate, LocalDate.now()).getYears();
@@ -27,8 +27,8 @@ public class SubscriptionAgeValidator implements ConstraintValidator<ValidSubscr
 
         // Logica di validazione, es: controllare se l'età è appropriata per il tipo di abbonamento
         if (hasSubscription != null && hasSubscription) {
-            // Supponiamo che il tipo di abbonamento richieda un'età minima di 18 anni
-            return age >= 18;
+            // Supponiamo che il tipo di abbonamento richieda un'età minima di 14 anni
+            return age >= 14;
         }
 
         return true;

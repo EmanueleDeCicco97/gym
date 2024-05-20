@@ -1,5 +1,7 @@
 package it.paa.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 
@@ -11,6 +13,7 @@ public class Trainer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long id;
 
     @NotBlank(message = "First name cannot be empty")
@@ -23,6 +26,7 @@ public class Trainer {
     private String specialization;
 
     @OneToMany(mappedBy = "associatedTrainer")
+    @JsonBackReference
     private List<TrainingProgram> trainingPrograms;
 
     private Integer workHours;
