@@ -33,9 +33,9 @@ public class TrainingIntensityValidator implements ConstraintValidator<ValidTrai
 
         // Logica di validazione, es: controllare se l'intensità è appropriata per l'età del cliente
         if (intensity != null) {
-            if (age < 18 && intensity.equalsIgnoreCase("alta")) {
+            if (age < 14 && intensity.equalsIgnoreCase("hard")) {
                 return false; // L'alta intensità non è appropriata per i minorenni
-            } else if (age >= 60 && intensity.equalsIgnoreCase("alta")) {
+            } else if (age >= 60 && intensity.equalsIgnoreCase("hard")) {
                 return false; // L'alta intensità non è appropriata per gli anziani
             }
         }

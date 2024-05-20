@@ -1,5 +1,6 @@
 package it.paa.controller;
 
+import io.quarkus.arc.ArcUndeclaredThrowableException;
 import it.paa.service.CustomerService;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
@@ -57,7 +58,17 @@ public class CustomerController {
     @DELETE
     @Path("/{id}")
     public Response deleteCustomer(@PathParam("id") Long id) {
-        customerService.deleteById(id);
-        return Response.ok().build();
+        try{
+            customerService.deleteById(id);
+            return Response.ok().build();
+        }catch(IllegalArgumentException e) {
+            return Response.status(Response.Status.NOT_FOUND).type(MediaType.TEXT_PLAIN).entity(e.getMessage()).build();
+        }catch(ArcUndeclaredThrowableException e) {
+            return Response.status(Response.Status.NOT_FOUND)
+                    .type(MediaType.TEXT_PLAIN)
+                    .entity("Cannot delete customer, remove associations first")
+                    .build();
+        }
+
     }
 }

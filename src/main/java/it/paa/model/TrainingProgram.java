@@ -2,6 +2,7 @@ package it.paa.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import it.paa.validation.ValidIntensity;
 import it.paa.validation.ValidTrainingIntensity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Positive;
@@ -22,16 +23,19 @@ public class TrainingProgram {
     @Positive(message = "duration cannot be negative")
     private int duration;
 
+    @ValidIntensity
     private String intensity;
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
     @JsonManagedReference
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Customer associatedCustomer;
 
     @ManyToOne
     @JoinColumn(name = "trainer_id")
     @JsonManagedReference
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Trainer associatedTrainer;
 
     public TrainingProgram() {

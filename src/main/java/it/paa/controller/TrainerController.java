@@ -1,5 +1,6 @@
 package it.paa.controller;
 
+import io.quarkus.arc.ArcUndeclaredThrowableException;
 import it.paa.model.Trainer;
 import it.paa.service.TrainerService;
 import jakarta.inject.Inject;
@@ -62,7 +63,20 @@ public class TrainerController {
     @DELETE
     @Path("/{id}")
     public Response deleteTrainer(@PathParam("id") Long id) {
-        trainerService.deleteById(id);
-        return Response.ok().build();
+        try {
+            trainerService.deleteById(id);
+            return Response.ok().build();
+
+        }catch (ArcUndeclaredThrowableException e){
+            return Response.status(Response.Status.NOT_FOUND)
+                   .type(MediaType.TEXT_PLAIN)
+                   .entity("Cannot delete trainer, remove associations first")
+                   .build();
+        }catch (IllegalArgumentException exception){
+            return Response.status(Response.Status.NOT_FOUND)
+                   .type(MediaType.TEXT_PLAIN)
+                   .entity(exception.getMessage())
+                   .build();
+        }
     }
 }
