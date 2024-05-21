@@ -32,7 +32,7 @@ public class CustomerController {
             Customer customer = customerService.findById(id);
             return Response.ok(customer).build();
 
-        }catch(IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.NOT_FOUND).type(MediaType.TEXT_PLAIN).entity(e.getMessage()).build();
         }
     }
@@ -58,12 +58,12 @@ public class CustomerController {
     @DELETE
     @Path("/{id}")
     public Response deleteCustomer(@PathParam("id") Long id) {
-        try{
+        try {
             customerService.deleteById(id);
             return Response.ok().build();
-        }catch(IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.NOT_FOUND).type(MediaType.TEXT_PLAIN).entity(e.getMessage()).build();
-        }catch(ArcUndeclaredThrowableException e) {
+        } catch (ArcUndeclaredThrowableException e) {
             return Response.status(Response.Status.NOT_FOUND)
                     .type(MediaType.TEXT_PLAIN)
                     .entity("Cannot delete customer, remove associations first")

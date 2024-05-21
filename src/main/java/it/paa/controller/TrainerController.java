@@ -67,22 +67,22 @@ public class TrainerController {
             trainerService.deleteById(id);
             return Response.ok().build();
 
-        }catch (ArcUndeclaredThrowableException e){
+        } catch (ArcUndeclaredThrowableException e) {
             return Response.status(Response.Status.NOT_FOUND)
-                   .type(MediaType.TEXT_PLAIN)
-                   .entity("Cannot delete trainer, remove associations first")
-                   .build();
-        }catch (IllegalArgumentException exception){
+                    .type(MediaType.TEXT_PLAIN)
+                    .entity("Cannot delete trainer, remove associations first")
+                    .build();
+        } catch (IllegalArgumentException exception) {
             return Response.status(Response.Status.NOT_FOUND)
-                   .type(MediaType.TEXT_PLAIN)
-                   .entity(exception.getMessage())
-                   .build();
+                    .type(MediaType.TEXT_PLAIN)
+                    .entity(exception.getMessage())
+                    .build();
         }
     }
 
     @GET
-    @Path("/top")
-    public Response findTopTrainerWithClients(){
+    @Path("/top-trainer-with-clients")
+    public Response findTopTrainerWithClients() {
         return Response.ok(trainerService.findTopTrainerWithMaxClients()).build();
     }
 }

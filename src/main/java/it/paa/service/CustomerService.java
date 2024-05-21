@@ -18,23 +18,36 @@ public class CustomerService implements CustomerRepository {
 
     public List<Customer> findAll(String name, String gender) {
 
+        // recupero la lista di customer dal db
         List<Customer> customers = entityManager.createQuery("SELECT c FROM Customer c", Customer.class).getResultList();
+
+        // filtro la lista di customer in base ai parametri passati
         if (name != null && !name.isEmpty() && !name.isBlank() && gender != null && !gender.isEmpty() && !gender.isBlank()) {
 
-            customers = customers.stream().filter(c -> c.getName().equalsIgnoreCase(name) && c.getGender().equalsIgnoreCase(gender)).collect(Collectors.toList());
+            // se vengono passati entrambi i parametri filtro per entrambi
+            customers = customers.stream()
+                    .filter(c -> c.getName().equalsIgnoreCase(name) && c.getGender().equalsIgnoreCase(gender))
+                    .collect(Collectors.toList());
 
         } else if (name != null && !name.isEmpty() && !name.isBlank()) {
 
-            customers = customers.stream().filter(c -> c.getName().equalsIgnoreCase(name)).collect(Collectors.toList());
+            // se viene passato solo il name filtro per il name
+            customers = customers.stream()
+                    .filter(c -> c.getName().equalsIgnoreCase(name))
+                    .collect(Collectors.toList());
 
         } else if (gender != null && !gender.isEmpty() && !gender.isBlank()) {
 
-            customers = customers.stream().filter(c -> c.getGender().equalsIgnoreCase(gender)).collect(Collectors.toList());
+            // se viene passato solo il gender filtro per il gender
+            customers = customers.stream()
+                    .filter(c -> c.getGender().equalsIgnoreCase(gender))
+                    .collect(Collectors.toList());
         }
 
         return customers;
     }
 
+    // recupero il customer dal db in base all'id passato
     public Customer findById(Long id) {
         Customer customer = entityManager.find(Customer.class, id);
         if (customer == null) {
@@ -43,27 +56,32 @@ public class CustomerService implements CustomerRepository {
         return customer;
     }
 
+    // salvo il customer nel db
     @Transactional
     public Customer save(Customer customer) {
         entityManager.persist(customer);
+
         return customer;
     }
 
+    // aggiorno il customer nel db
     @Transactional
     public Customer update(Long id, Customer customer) {
-        // Controllo se il cliente esiste
+        // controllo se il customer esiste
         Customer existingCustomer = findById(id);
 
-        // Effettua l'aggiornamento del cliente esistente
+        // dopo aver recuperato il customer, aggiorno i dati
         existingCustomer.setName(customer.getName());
         existingCustomer.setSurname(customer.getSurname());
         existingCustomer.setDateOfBirth(customer.getDateOfBirth());
         existingCustomer.setGender(customer.getGender());
         existingCustomer.setActiveSubscription(customer.getActiveSubscription());
 
+        // effettuo il merge sul customer esistente
         return entityManager.merge(existingCustomer);
     }
 
+    // elimino il customer dal db in base all'id passato
     @Transactional
     public void deleteById(Long id) {
         Customer customer = entityManager.find(Customer.class, id);

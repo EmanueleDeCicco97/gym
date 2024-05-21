@@ -16,4 +16,5 @@ public interface TrainingProgramRepository {
 
     void deleteById(Long id);
 
+    List<TrainingProgram> findByTrainingType(String trainingType);
 }

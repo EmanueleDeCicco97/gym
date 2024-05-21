@@ -1,8 +1,11 @@
 package it.paa.repository;
 
+import it.paa.model.Customer;
 import it.paa.model.Trainer;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public interface TrainerRepository {
 
@@ -15,5 +18,7 @@ public interface TrainerRepository {
     Trainer update(Long id, Trainer trainer);
 
     void deleteById(Long id);
+
+    Map<Trainer, Set<Customer>> findTopTrainerWithMaxClients();
 
 }

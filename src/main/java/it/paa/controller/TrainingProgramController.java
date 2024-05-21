@@ -92,7 +92,7 @@ public class TrainingProgramController {
     }
 
     @GET
-    @Path("/training/{trainingType}")
+    @Path("/{trainingType}")
     public List<TrainingProgram> getCustomersByTrainingType(@PathParam("trainingType") String trainingType) {
         return trainingProgramService.findByTrainingType(trainingType);
     }

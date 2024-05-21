@@ -12,13 +12,13 @@ public class IntensityValidatorCheck implements ConstraintValidator<ValidIntensi
 
     @Override
     public void initialize(ValidIntensity constraintAnnotation) {
-        // Initialization code if needed
+
     }
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
         if (value == null) {
-            return false; // or true if you want to allow null values
+            return false;
         }
         return allowedIntensities.contains(value.toLowerCase());
     }

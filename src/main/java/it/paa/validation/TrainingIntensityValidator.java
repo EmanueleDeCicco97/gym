@@ -4,6 +4,7 @@ import it.paa.model.Customer;
 import it.paa.model.TrainingProgram;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
+
 import java.time.LocalDate;
 import java.time.Period;
 
@@ -15,28 +16,28 @@ public class TrainingIntensityValidator implements ConstraintValidator<ValidTrai
     @Override
     public boolean isValid(TrainingProgram trainingProgram, ConstraintValidatorContext context) {
         if (trainingProgram == null) {
-            return true; // Consider null values as valid
+            return true;
         }
 
         Customer customer = trainingProgram.getAssociatedCustomer();
         if (customer == null) {
-            return true; // This should be validated separately
+            return true;
         }
 
         LocalDate birthDate = customer.getDateOfBirth();
         if (birthDate == null) {
-            return true; // This should be validated by @NotNull
+            return true;
         }
 
         int age = Period.between(birthDate, LocalDate.now()).getYears();
         String intensity = trainingProgram.getIntensity();
 
-        // Logica di validazione, es: controllare se l'intensità è appropriata per l'età del cliente
+        // controllo se l'intensità è appropriata per l'età del cliente
         if (intensity != null) {
             if (age < 14 && intensity.equalsIgnoreCase("hard")) {
-                return false; // L'alta intensità non è appropriata per i minorenni
+                return false; // L'intensità Hard non è appropriata per i minorenni
             } else if (age >= 60 && intensity.equalsIgnoreCase("hard")) {
-                return false; // L'alta intensità non è appropriata per gli anziani
+                return false; // L'intensità Hard non è appropriata per gli anziani
             }
         }
 
