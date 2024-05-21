@@ -64,6 +64,19 @@ public class TrainingProgramService implements TrainingProgramRepository {
         return trainingProgram;
     }
 
+    // controllo se esiste già un training program associato al cliente
+    public boolean isCustomerAssociated(Long customerId) {
+        // eseguo una query per controllare se esiste un TrainingProgram associato al cliente
+        List<TrainingProgram> existingTrainingPrograms = entityManager.createQuery(
+                        "SELECT tp FROM TrainingProgram tp " +
+                                "WHERE tp.associatedCustomer.id = :customerId", TrainingProgram.class)
+                .setParameter("customerId", customerId)
+                .getResultList();
+
+        // se esiste almeno un TrainingProgram associato al cliente, restituisci true
+        return !existingTrainingPrograms.isEmpty();
+    }
+
     // aggiorno il training program nel db
     @Transactional
     public TrainingProgram update(Long id, TrainingProgram trainingProgram) {

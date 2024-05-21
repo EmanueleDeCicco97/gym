@@ -56,6 +56,15 @@ public class TrainingProgramController {
             Customer customer = customerService.findById(customerId);
             Trainer trainer = trainerService.findById(trainerId);
 
+            // controllo se il cliente è già associato a questo trainer
+            boolean isAlreadyAssociated = trainingProgramService.isCustomerAssociated(customerId);
+            if (isAlreadyAssociated) {
+                return Response.status(Response.Status.CONFLICT)
+                        .type(MediaType.TEXT_PLAIN)
+                        .entity("The client is already associated with a trainer.")
+                        .build();
+            }
+
             // setto il customer e il trainer nel training program
             trainingProgram.setAssociatedCustomer(customer);
             trainingProgram.setAssociatedTrainer(trainer);
