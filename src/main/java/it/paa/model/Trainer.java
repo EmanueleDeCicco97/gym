@@ -33,6 +33,7 @@ public class Trainer {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private List<TrainingProgram> trainingPrograms;
 
+    @Column(name = "work_hours")
     private Integer workHours;
 
     public Trainer() {

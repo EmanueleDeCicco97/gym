@@ -18,6 +18,7 @@ public class TrainingProgram {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long id;
 
+    @Column(name = "training_type")
     private String trainingType;
 
     @Positive(message = "duration cannot be negative")
