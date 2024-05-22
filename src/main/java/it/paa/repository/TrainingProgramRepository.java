@@ -90,7 +90,7 @@ public class TrainingProgramRepository {
     // elimino il training program dal db in base all'id passato'
     @Transactional
     public TrainingProgram deleteById(Long id) {
-        TrainingProgram trainingProgram = entityManager.find(TrainingProgram.class, id);
+        TrainingProgram trainingProgram = findById(id);
         if (trainingProgram != null) {
             entityManager.remove(trainingProgram);
         }

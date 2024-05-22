@@ -98,7 +98,7 @@ public class TrainingProgramController {
     public Response deleteById(@PathParam("id") Long id) {
         try {
             trainingProgramService.deleteById(id);
-            return Response.noContent().build();
+            return Response.ok().build();
 
         } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.NOT_FOUND).type(MediaType.TEXT_PLAIN).entity(e.getMessage()).build();
