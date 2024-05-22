@@ -1,5 +1,6 @@
 package it.paa.controller;
 
+import io.quarkus.arc.ArcUndeclaredThrowableException;
 import it.paa.dto.TrainingProgramDto;
 import it.paa.model.Customer;
 import it.paa.model.Trainer;
@@ -90,6 +91,12 @@ public class TrainingProgramController {
             return Response.ok(updatedTrainingProgram).build();
         } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.NOT_FOUND).type(MediaType.TEXT_PLAIN).entity(e.getMessage()).build();
+        } catch (ArcUndeclaredThrowableException e) {
+            return Response.status(Response.Status.NOT_FOUND)
+                    .type(MediaType.TEXT_PLAIN)
+                    .entity("the intensity can only be easy, medium and hard")
+                    .build();
+
         }
     }
 

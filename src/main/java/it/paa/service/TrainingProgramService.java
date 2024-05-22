@@ -55,15 +55,15 @@ public class TrainingProgramService {
         }
 
         // se il training type non è vuoto aggiorno il training type
-        if (!trainingProgramDto.getTrainingType().isEmpty() && !trainingProgramDto.getTrainingType().isBlank()) {
+        if (trainingProgramDto.getTrainingType() != null && !trainingProgramDto.getTrainingType().isEmpty() && !trainingProgramDto.getTrainingType().isBlank()) {
             existingTrainingProgram.setTrainingType(trainingProgramDto.getTrainingType());
         }
         // se la durata non è nulla aggiorno la durata
-        if (trainingProgramDto.getDuration() != null) {
+        if (trainingProgramDto.getDuration() != null &&  trainingProgramDto.getDuration() > 0 ) {
             existingTrainingProgram.setDuration(trainingProgramDto.getDuration());
         }
         // se l'intensità non è vuota aggiorno l'intensità
-        if (!trainingProgramDto.getIntensity().isEmpty() && !trainingProgramDto.getIntensity().isBlank()) {
+        if (trainingProgramDto.getIntensity() != null && !trainingProgramDto.getIntensity().isEmpty() && !trainingProgramDto.getIntensity().isBlank()) {
             existingTrainingProgram.setIntensity(trainingProgramDto.getIntensity());
         }
         trainingProgramRepository.update(existingTrainingProgram);

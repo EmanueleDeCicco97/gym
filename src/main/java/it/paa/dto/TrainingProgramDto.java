@@ -1,9 +1,13 @@
 package it.paa.dto;
 
+import jakarta.validation.constraints.Positive;
+
 public class TrainingProgramDto {
 
     private String trainingType;
+    @Positive(message = "The duration must be positive.")
     private Integer duration;
+
     private String intensity;
     private Long customerId;
     private Long trainerId;
