@@ -21,11 +21,16 @@ public class EquipmentController {
     @GET
     public Response getAllEquipment(@QueryParam("name") String name, @QueryParam("availability") Integer availability) {
         List<Equipment> equipmentList = equipmentService.findAll(name, availability);
+        if (equipmentList.isEmpty()) {
+            return Response.status(Response.Status.NO_CONTENT)
+                    .type(MediaType.TEXT_PLAIN)
+                    .build();
+        }
         return Response.ok(equipmentList).build();
     }
 
     @GET
-    @Path("/{id}")
+    @Path("/equipment_id/{id}")
     public Response getEquipmentById(@PathParam("id") Long id) {
         try {
             Equipment equipment = equipmentService.findById(id);
@@ -40,13 +45,25 @@ public class EquipmentController {
 
     @POST
     public Response createEquipment(@Valid Equipment equipment) {
+        if (equipment == null) {
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .type(MediaType.TEXT_PLAIN)
+                    .entity("Equipment cannot be null")
+                    .build();
+        }
         Equipment savedEquipment = equipmentService.save(equipment);
         return Response.status(Response.Status.CREATED).entity(savedEquipment).build();
     }
 
     @PUT
-    @Path("/{id}")
+    @Path("/equipment_id/{id}")
     public Response updateEquipment(@PathParam("id") Long id, @Valid Equipment equipmentDetails) {
+        if (equipmentDetails == null) {
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .type(MediaType.TEXT_PLAIN)
+                    .entity("Equipment cannot be null")
+                    .build();
+        }
         equipmentDetails.setId(id);
         try {
             Equipment updatedEquipment = equipmentService.update(id, equipmentDetails);
@@ -60,7 +77,7 @@ public class EquipmentController {
     }
 
     @DELETE
-    @Path("/{id}")
+    @Path("/equipment_id/{id}")
     public Response deleteEquipment(@PathParam("id") Long id) {
         try {
             equipmentService.deleteById(id);

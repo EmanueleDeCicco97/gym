@@ -22,11 +22,16 @@ public class TrainerController {
     @GET
     public Response getAllTrainers(@QueryParam("name") String name, @QueryParam("specialization") String specialization) {
         List<Trainer> trainerList = trainerService.findAll(name, specialization);
+        if (trainerList.isEmpty()) {
+            return Response.status(Response.Status.NO_CONTENT)
+                    .type(MediaType.TEXT_PLAIN)
+                    .build();
+        }
         return Response.ok(trainerList).build();
     }
 
     @GET
-    @Path("/{id}")
+    @Path("/trainer_id/{id}")
     public Response getTrainerById(@PathParam("id") Long id) {
         try {
             Trainer trainer = trainerService.findById(id);
@@ -41,13 +46,25 @@ public class TrainerController {
 
     @POST
     public Response createTrainer(@Valid Trainer trainer) {
+        if (trainer == null) {
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .type(MediaType.TEXT_PLAIN)
+                    .entity("Trainer cannot be null")
+                    .build();
+        }
         Trainer savedTrainer = trainerService.save(trainer);
         return Response.status(Response.Status.CREATED).entity(savedTrainer).build();
     }
 
     @PUT
-    @Path("/{id}")
+    @Path("/trainer_id/{id}")
     public Response updateTrainer(@PathParam("id") Long id, @Valid Trainer trainerDetails) {
+        if (trainerDetails == null) {
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .type(MediaType.TEXT_PLAIN)
+                    .entity("Trainer cannot be null")
+                    .build();
+        }
         trainerDetails.setId(id);
         try {
             Trainer updatedTrainer = trainerService.update(id, trainerDetails);
@@ -61,7 +78,7 @@ public class TrainerController {
     }
 
     @DELETE
-    @Path("/{id}")
+    @Path("/trainer_id/{id}")
     public Response deleteTrainer(@PathParam("id") Long id) {
         try {
             trainerService.deleteById(id);
@@ -81,7 +98,7 @@ public class TrainerController {
     }
 
     @GET
-    @Path("/top-trainer-with-clients")
+    @Path("/most_requested_trainer")
     public Response findTopTrainerWithClients() {
         return Response.ok(trainerService.findTopTrainerWithMaxClients()).build();
     }

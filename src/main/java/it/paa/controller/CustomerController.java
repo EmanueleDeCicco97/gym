@@ -24,11 +24,14 @@ public class CustomerController {
     @GET
     public Response getAllCustomers(@QueryParam("name") String name, @QueryParam("gender") String gender) {
         List<Customer> customers = customerService.findAll(name, gender);
+        if (customers.isEmpty()) {
+            return Response.status(Response.Status.NO_CONTENT).type(MediaType.TEXT_PLAIN).build();
+        }
         return Response.ok(customers).build();
     }
 
     @GET
-    @Path("/{id}")
+    @Path("/customer_id/{id}")
     public Response getCustomerById(@PathParam("id") Long id) {
         try {
             Customer customer = customerService.findById(id);
@@ -41,13 +44,19 @@ public class CustomerController {
 
     @POST
     public Response createCustomer(@Valid Customer customer) {
+        if (customer == null) {
+            return Response.status(Response.Status.BAD_REQUEST).type(MediaType.TEXT_PLAIN).entity("customer is invalid").build();
+        }
         Customer savedCustomer = customerService.save(customer);
         return Response.status(Response.Status.CREATED).entity(savedCustomer).build();
     }
 
     @PUT
-    @Path("/{id}")
+    @Path("/customer_id/{id}")
     public Response updateCustomer(@PathParam("id") Long id, @Valid Customer customerDetails) {
+        if (customerDetails == null) {
+            return Response.status(Response.Status.BAD_REQUEST).type(MediaType.TEXT_PLAIN).entity("customer cannot be null").build();
+        }
         customerDetails.setId(id);
         try {
             Customer updatedCustomer = customerService.update(id, customerDetails);
@@ -58,7 +67,7 @@ public class CustomerController {
     }
 
     @DELETE
-    @Path("/{id}")
+    @Path("/customer_id/{id}")
     public Response deleteCustomer(@PathParam("id") Long id) {
         try {
             if (trainingProgramService.isCustomerAssociated(id)) {

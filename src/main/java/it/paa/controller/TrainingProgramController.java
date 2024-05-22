@@ -29,13 +29,17 @@ public class TrainingProgramController {
     TrainerService trainerService;
 
     @GET
-    public List<TrainingProgram> findAll(@QueryParam("duration") Integer duration,
-                                         @QueryParam("intensity") String intensity) {
-        return trainingProgramService.findAll(duration, intensity);
+    public Response findAll(@QueryParam("duration") Integer duration,
+                            @QueryParam("intensity") String intensity) {
+        List<TrainingProgram> trainingPrograms = trainingProgramService.findAll(duration, intensity);
+        if (trainingPrograms.isEmpty()) {
+            return Response.status(Response.Status.NO_CONTENT).type(MediaType.TEXT_PLAIN).build();
+        }
+        return Response.ok(trainingPrograms).build();
     }
 
     @GET
-    @Path("/{id}")
+    @Path("/training_program_id/{id}")
     public Response findById(@PathParam("id") Long id) {
         try {
             TrainingProgram trainingProgram = trainingProgramService.findById(id);
@@ -48,11 +52,17 @@ public class TrainingProgramController {
     }
 
     @POST
-    @Path("/{trainerId}/customer/{customerId}")
+    @Path("/trainer_id/{trainerId}/customer/{customerId}")
     public Response save(@PathParam("trainerId") Long trainerId,
                          @PathParam("customerId") Long customerId,
                          @Valid TrainingProgram trainingProgram) {
         try {
+            if (trainingProgram == null) {
+                return Response.status(Response.Status.BAD_REQUEST)
+                        .type(MediaType.TEXT_PLAIN)
+                        .entity("The training program cannot be null.")
+                        .build();
+            }
 
             // cerco nel db il customer e il trainer in base all'id
             Customer customer = customerService.findById(customerId);
@@ -84,9 +94,15 @@ public class TrainingProgramController {
     }
 
     @PUT
-    @Path("/{id}")
+    @Path("/training_program_id/{id}")
     public Response update(@PathParam("id") Long id, @Valid TrainingProgramDto trainingProgramDto) {
         try {
+            if (trainingProgramDto == null) {
+                return Response.status(Response.Status.BAD_REQUEST)
+                        .type(MediaType.TEXT_PLAIN)
+                        .entity("The training program cannot be null.")
+                        .build();
+            }
             TrainingProgram updatedTrainingProgram = trainingProgramService.update(id, trainingProgramDto);
             return Response.ok(updatedTrainingProgram).build();
         } catch (IllegalArgumentException e) {
@@ -101,7 +117,7 @@ public class TrainingProgramController {
     }
 
     @DELETE
-    @Path("/{id}")
+    @Path("/training_program_id/{id}")
     public Response deleteById(@PathParam("id") Long id) {
         try {
             trainingProgramService.deleteById(id);
