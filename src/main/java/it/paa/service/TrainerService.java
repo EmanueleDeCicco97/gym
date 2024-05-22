@@ -43,19 +43,19 @@ public class TrainerService {
 
         // dopo aver recuperato il trainer, aggiorno i dati
         // se il nome non è vuoto lo aggiorno
-        if(trainer.getName() != null && !trainer.getName().isEmpty() && !trainer.getName().isBlank()){
+        if (trainer.getName() != null && !trainer.getName().isEmpty() && !trainer.getName().isBlank()) {
             existingTrainer.setName(trainer.getName());
         }
         // se il cognome non è vuoto lo aggiorno
-        if (trainer.getSurname()!= null && !trainer.getSurname().isEmpty() && !trainer.getSurname().isBlank()){
+        if (trainer.getSurname() != null && !trainer.getSurname().isEmpty() && !trainer.getSurname().isBlank()) {
             existingTrainer.setSurname(trainer.getSurname());
         }
         // se la specializzazione non è vuota la aggiorno
-        if(trainer.getSpecialization()!= null && !trainer.getSpecialization().isEmpty() && !trainer.getSpecialization().isBlank()){
+        if (trainer.getSpecialization() != null && !trainer.getSpecialization().isEmpty() && !trainer.getSpecialization().isBlank()) {
             existingTrainer.setSpecialization(trainer.getSpecialization());
         }
         // se le ore di lavoro non sono vuote le aggiorno
-        if(trainer.getWorkHours()!= null && trainer.getWorkHours() > 0){
+        if (trainer.getWorkHours() != null && trainer.getWorkHours() > 0) {
             existingTrainer.setWorkHours(trainer.getWorkHours());
         }
 

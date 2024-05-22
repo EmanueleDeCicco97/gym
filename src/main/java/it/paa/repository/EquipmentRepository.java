@@ -21,7 +21,7 @@ public class EquipmentRepository {
 
         // Aggiunta dei filtri se i parametri sono presenti
         if (name != null && !name.isEmpty() && !name.isBlank()) {
-            queryString.append(" AND LOWER(e.name) = :name");
+            queryString.append(" AND LOWER(e.name) = LOWER(:name)");
         }
 
         if (availability != null) {
@@ -43,6 +43,7 @@ public class EquipmentRepository {
         // Esecuzione della query e restituzione dei risultati
         return query.getResultList();
     }
+
 
 
     // recupero l'equipment dal db in base all'id passato

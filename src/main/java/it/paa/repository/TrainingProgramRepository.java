@@ -97,14 +97,16 @@ public class TrainingProgramRepository {
         return trainingProgram;
     }
 
-    // restituisco una lista di programmi di allenamento che corrispondono al tipo di allenamento specificato e visualizzo i dettagli
     public List<TrainingProgram> findByTrainingType(String trainingType) {
-        // recupero tutti i programmi di allenamento che corrispondono al tipo di allenamento specificato
-        List<TrainingProgram> trainingProgramList = entityManager.createQuery("SELECT tp FROM TrainingProgram tp where tp.trainingType = :trainingType", TrainingProgram.class)
-                // imposto il parametro "trainingType" con il valore passato al metodo.
-                .setParameter("trainingType", trainingType)
-                // restituisco la lista di programmi di allenamento che corrispondono al tipo di allenamento specificato.
+        // Creazione della query con LOWER per il confronto case-insensitive
+        List<TrainingProgram> trainingProgramList = entityManager.createQuery(
+                        "SELECT tp FROM TrainingProgram tp WHERE LOWER(tp.trainingType) = LOWER(:trainingType)",
+                        TrainingProgram.class)
+                // Imposta il parametro "trainingType" in minuscolo
+                .setParameter("trainingType", trainingType.toLowerCase())
+                // Restituisce la lista di programmi di allenamento che corrispondono al tipo di allenamento specificato
                 .getResultList();
+
         return trainingProgramList;
     }
 }
