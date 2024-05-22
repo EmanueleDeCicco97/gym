@@ -59,7 +59,7 @@ public class TrainingProgramService {
             existingTrainingProgram.setTrainingType(trainingProgramDto.getTrainingType());
         }
         // se la durata non è nulla aggiorno la durata
-        if (trainingProgramDto.getDuration() != null &&  trainingProgramDto.getDuration() > 0 ) {
+        if (trainingProgramDto.getDuration() != null && trainingProgramDto.getDuration() > 0) {
             existingTrainingProgram.setDuration(trainingProgramDto.getDuration());
         }
         // se l'intensità non è vuota aggiorno l'intensità
@@ -89,5 +89,10 @@ public class TrainingProgramService {
     public boolean isCustomerAssociated(Long customerId) {
 
         return trainingProgramRepository.isCustomerAssociated(customerId);
+    }
+
+    public boolean isTrainerAssociated(Long trainerId) {
+
+        return trainingProgramRepository.isTrainerAssociated(trainerId);
     }
 }

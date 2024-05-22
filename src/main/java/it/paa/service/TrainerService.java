@@ -2,21 +2,19 @@ package it.paa.service;
 
 import it.paa.model.Customer;
 import it.paa.model.Trainer;
-import it.paa.model.TrainingProgram;
 import it.paa.repository.TrainerRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @ApplicationScoped
 public class TrainerService {
     @Inject
     TrainerRepository trainerRepository;
+    @Inject
+    TrainingProgramService trainingProgramService;
 
     public List<Trainer> findAll(String name, String specialization) {
         return trainerRepository.findAll(name, specialization);
@@ -66,7 +64,13 @@ public class TrainerService {
     // elimino il trainer dal db in base all'id passato
     @Transactional
     public Trainer deleteById(Long id) {
+
+        if (trainingProgramService.isTrainerAssociated(id)) {
+            throw new IllegalArgumentException("Trainer with id " + id + " is associated with a training program and cannot be deleted");
+        }
+
         Trainer trainer = trainerRepository.deleteById(id);
+
         if (trainer == null) {
             throw new IllegalArgumentException("Trainer with id " + id + " not found");
         }

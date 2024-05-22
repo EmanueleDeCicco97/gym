@@ -8,7 +8,6 @@ import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @ApplicationScoped
 public class EquipmentRepository {
@@ -43,7 +42,6 @@ public class EquipmentRepository {
         // Esecuzione della query e restituzione dei risultati
         return query.getResultList();
     }
-
 
 
     // recupero l'equipment dal db in base all'id passato

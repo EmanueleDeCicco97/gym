@@ -1,7 +1,7 @@
 package it.paa.controller;
 
-import io.quarkus.arc.ArcUndeclaredThrowableException;
 import it.paa.service.CustomerService;
+import it.paa.service.TrainingProgramService;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
@@ -18,6 +18,8 @@ public class CustomerController {
 
     @Inject
     CustomerService customerService;
+    @Inject
+    TrainingProgramService trainingProgramService;
 
     @GET
     public Response getAllCustomers(@QueryParam("name") String name, @QueryParam("gender") String gender) {
@@ -59,15 +61,17 @@ public class CustomerController {
     @Path("/{id}")
     public Response deleteCustomer(@PathParam("id") Long id) {
         try {
+            if (trainingProgramService.isCustomerAssociated(id)) {
+                throw new IllegalArgumentException("Customer with id " + id + " is associated with a training program and cannot be deleted");
+            }
+
             customerService.deleteById(id);
+
             return Response.ok().build();
+
         } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.NOT_FOUND).type(MediaType.TEXT_PLAIN).entity(e.getMessage()).build();
-        } catch (ArcUndeclaredThrowableException e) {
-            return Response.status(Response.Status.NOT_FOUND)
-                    .type(MediaType.TEXT_PLAIN)
-                    .entity("Cannot delete customer, remove associations first")
-                    .build();
+
         }
 
     }

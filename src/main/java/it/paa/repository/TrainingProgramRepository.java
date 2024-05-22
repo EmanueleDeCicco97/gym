@@ -81,10 +81,20 @@ public class TrainingProgramRepository {
         return !existingTrainingPrograms.isEmpty();
     }
 
+    public boolean isTrainerAssociated(Long trainerId) {
+        List<TrainingProgram> existingTrainingPrograms = entityManager.createQuery(
+                        "SELECT tp FROM TrainingProgram tp " +
+                                "WHERE tp.associatedTrainer.id = :trainerId", TrainingProgram.class)
+                .setParameter("trainerId", trainerId)
+                .getResultList();
+
+        return !existingTrainingPrograms.isEmpty();
+    }
+
     // aggiorno il training program nel db
     @Transactional
     public void update(TrainingProgram trainingProgram) {
-         entityManager.merge(trainingProgram);
+        entityManager.merge(trainingProgram);
     }
 
     // elimino il training program dal db in base all'id passato'
