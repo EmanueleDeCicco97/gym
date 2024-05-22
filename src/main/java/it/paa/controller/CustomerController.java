@@ -45,7 +45,7 @@ public class CustomerController {
     @POST
     public Response createCustomer(@Valid Customer customer) {
         if (customer == null) {
-            return Response.status(Response.Status.BAD_REQUEST).type(MediaType.TEXT_PLAIN).entity("customer is invalid").build();
+            return Response.status(Response.Status.BAD_REQUEST).type(MediaType.TEXT_PLAIN).entity("customer cannot be null").build();
         }
         Customer savedCustomer = customerService.save(customer);
         return Response.status(Response.Status.CREATED).entity(savedCustomer).build();
