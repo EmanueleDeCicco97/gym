@@ -84,11 +84,6 @@ public class TrainerController {
             trainerService.deleteById(id);
             return Response.ok().build();
 
-        } catch (ArcUndeclaredThrowableException e) {
-            return Response.status(Response.Status.NOT_FOUND)
-                    .type(MediaType.TEXT_PLAIN)
-                    .entity("Cannot delete trainer, remove associations first")
-                    .build();
         } catch (IllegalArgumentException exception) {
             return Response.status(Response.Status.NOT_FOUND)
                     .type(MediaType.TEXT_PLAIN)

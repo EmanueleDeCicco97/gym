@@ -81,7 +81,8 @@ public class TrainerRepository {
         return trainer;
     }
 
-    // restituisco una mappa dei primi 3 trainer con più clienti associati.
+    //Esercitazione 2: Implementazione di un endpoint per trovare gli allenatori con il maggior numero di clienti e
+    // visualizzare i dettagli dei clienti che seguono ciascun allenatore.
     public Map<Trainer, Set<Customer>> findTopTrainerWithMaxClients() {
         // creo una mappa di risultato per memorizzare i trainer e i loro clienti
         Map<Trainer, Set<Customer>> mapResult = new LinkedHashMap<>();

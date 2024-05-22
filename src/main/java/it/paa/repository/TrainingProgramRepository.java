@@ -107,6 +107,8 @@ public class TrainingProgramRepository {
         return trainingProgram;
     }
 
+    //•	Esercitazione 1: Creazione di una funzionalità per ottenere tutti i clienti che seguono un determinato programma di allenamento e
+    // visualizzare i dettagli del programma e dell'allenatore.
     public List<TrainingProgram> findByTrainingType(String trainingType) {
         // Creazione della query con LOWER per il confronto case-insensitive
         List<TrainingProgram> trainingProgramList = entityManager.createQuery(

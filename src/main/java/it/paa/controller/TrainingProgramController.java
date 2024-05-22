@@ -87,6 +87,7 @@ public class TrainingProgramController {
 
             TrainingProgram createdTrainingProgram = trainingProgramService.save(trainingProgram);
             return Response.status(Response.Status.CREATED).entity(createdTrainingProgram).build();
+
         } catch (IllegalArgumentException e) {
 
             return Response.status(Response.Status.NOT_FOUND).type(MediaType.TEXT_PLAIN).entity(e.getMessage()).build();
@@ -107,6 +108,7 @@ public class TrainingProgramController {
             return Response.ok(updatedTrainingProgram).build();
         } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.NOT_FOUND).type(MediaType.TEXT_PLAIN).entity(e.getMessage()).build();
+
         } catch (ArcUndeclaredThrowableException e) {
             return Response.status(Response.Status.NOT_FOUND)
                     .type(MediaType.TEXT_PLAIN)
