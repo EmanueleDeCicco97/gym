@@ -12,8 +12,7 @@ import java.lang.annotation.Target;
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ValidSubscriptionAge {
-    String message() default "\n" +
-            "The age of the customer is not consistent with the type of subscription chosen, only those over 14 years of age can activate subscriptions";
+    String message() default "The age of the customer is not consistent with the type of subscription chosen, only those over 14 years of age can activate subscriptions";
 
     Class<?>[] groups() default {};
 
