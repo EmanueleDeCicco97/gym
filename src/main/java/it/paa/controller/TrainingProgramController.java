@@ -1,5 +1,6 @@
 package it.paa.controller;
 
+import it.paa.dto.TrainingProgramDto;
 import it.paa.model.Customer;
 import it.paa.model.Trainer;
 import it.paa.model.TrainingProgram;
@@ -46,9 +47,9 @@ public class TrainingProgramController {
     }
 
     @POST
-    @Path("/{customerId}/{trainerId}")
-    public Response save(@PathParam("customerId") Long customerId,
-                         @PathParam("trainerId") Long trainerId,
+    @Path("/{trainerId}/customer/{customerId}")
+    public Response save(@PathParam("trainerId") Long trainerId,
+                         @PathParam("customerId") Long customerId,
                          @Valid TrainingProgram trainingProgram) {
         try {
 
@@ -66,8 +67,12 @@ public class TrainingProgramController {
             }
 
             // setto il customer e il trainer nel training program
-            trainingProgram.setAssociatedCustomer(customer);
-            trainingProgram.setAssociatedTrainer(trainer);
+            if(customer != null){
+                trainingProgram.setAssociatedCustomer(customer);
+            }
+            if(trainer!= null){
+                trainingProgram.setAssociatedTrainer(trainer);
+            }
 
             TrainingProgram createdTrainingProgram = trainingProgramService.save(trainingProgram);
             return Response.status(Response.Status.CREATED).entity(createdTrainingProgram).build();
@@ -79,9 +84,9 @@ public class TrainingProgramController {
 
     @PUT
     @Path("/{id}")
-    public Response update(@PathParam("id") Long id, @Valid TrainingProgram trainingProgram) {
+    public Response update(@PathParam("id") Long id, @Valid TrainingProgramDto trainingProgramDto) {
         try {
-            TrainingProgram updatedTrainingProgram = trainingProgramService.update(id, trainingProgram);
+            TrainingProgram updatedTrainingProgram = trainingProgramService.update(id, trainingProgramDto);
             return Response.ok(updatedTrainingProgram).build();
         } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.NOT_FOUND).type(MediaType.TEXT_PLAIN).entity(e.getMessage()).build();
@@ -101,10 +106,9 @@ public class TrainingProgramController {
     }
 
     @GET
-    @Path("/{trainingType}")
+    @Path("training_type/{trainingType}")
     public List<TrainingProgram> getCustomersByTrainingType(@PathParam("trainingType") String trainingType) {
         return trainingProgramService.findByTrainingType(trainingType);
     }
-
 
 }

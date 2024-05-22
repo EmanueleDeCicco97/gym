@@ -22,7 +22,7 @@ public class TrainingProgram {
     private String trainingType;
 
     @Positive(message = "duration cannot be negative")
-    private int duration;
+    private Integer duration;
 
     @ValidIntensity
     private String intensity;
@@ -58,11 +58,11 @@ public class TrainingProgram {
         this.trainingType = trainingType;
     }
 
-    public int getDuration() {
+    public Integer getDuration() {
         return duration;
     }
 
-    public void setDuration(int duration) {
+    public void setDuration(Integer duration) {
         this.duration = duration;
     }
 
