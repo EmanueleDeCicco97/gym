@@ -26,7 +26,7 @@ public class TrainerController {
     }
 
     @GET
-    @Path("/{id}")
+    @Path("/trainer_id/{id}")
     public Response getTrainerById(@PathParam("id") Long id) {
         try {
             Trainer trainer = trainerService.findById(id);
@@ -46,7 +46,7 @@ public class TrainerController {
     }
 
     @PUT
-    @Path("/{id}")
+    @Path("/trainer_id/{id}")
     public Response updateTrainer(@PathParam("id") Long id, @Valid Trainer trainerDetails) {
         trainerDetails.setId(id);
         try {
@@ -61,7 +61,7 @@ public class TrainerController {
     }
 
     @DELETE
-    @Path("/{id}")
+    @Path("/trainer_id/{id}")
     public Response deleteTrainer(@PathParam("id") Long id) {
         try {
             trainerService.deleteById(id);
@@ -81,7 +81,7 @@ public class TrainerController {
     }
 
     @GET
-    @Path("/top-trainer-with-clients")
+    @Path("/most_requested_trainer")
     public Response findTopTrainerWithClients() {
         return Response.ok(trainerService.findTopTrainerWithMaxClients()).build();
     }

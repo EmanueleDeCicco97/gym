@@ -25,7 +25,7 @@ public class EquipmentController {
     }
 
     @GET
-    @Path("/{id}")
+    @Path("/equipment_id/{id}")
     public Response getEquipmentById(@PathParam("id") Long id) {
         try {
             Equipment equipment = equipmentService.findById(id);
@@ -45,7 +45,7 @@ public class EquipmentController {
     }
 
     @PUT
-    @Path("/{id}")
+    @Path("/equipment_id/{id}")
     public Response updateEquipment(@PathParam("id") Long id, @Valid Equipment equipmentDetails) {
         equipmentDetails.setId(id);
         try {
@@ -60,7 +60,7 @@ public class EquipmentController {
     }
 
     @DELETE
-    @Path("/{id}")
+    @Path("/equipment_id/{id}")
     public Response deleteEquipment(@PathParam("id") Long id) {
         try {
             equipmentService.deleteById(id);

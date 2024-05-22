@@ -35,7 +35,7 @@ public class TrainingProgramController {
     }
 
     @GET
-    @Path("/{id}")
+    @Path("/training_program_id/{id}")
     public Response findById(@PathParam("id") Long id) {
         try {
             TrainingProgram trainingProgram = trainingProgramService.findById(id);
@@ -48,7 +48,7 @@ public class TrainingProgramController {
     }
 
     @POST
-    @Path("/{trainerId}/customer/{customerId}")
+    @Path("/trainer_id/{trainerId}/customer/{customerId}")
     public Response save(@PathParam("trainerId") Long trainerId,
                          @PathParam("customerId") Long customerId,
                          @Valid TrainingProgram trainingProgram) {
@@ -84,7 +84,7 @@ public class TrainingProgramController {
     }
 
     @PUT
-    @Path("/{id}")
+    @Path("/training_program_id/{id}")
     public Response update(@PathParam("id") Long id, @Valid TrainingProgramDto trainingProgramDto) {
         try {
             TrainingProgram updatedTrainingProgram = trainingProgramService.update(id, trainingProgramDto);
@@ -101,7 +101,7 @@ public class TrainingProgramController {
     }
 
     @DELETE
-    @Path("/{id}")
+    @Path("/training_program_id/{id}")
     public Response deleteById(@PathParam("id") Long id) {
         try {
             trainingProgramService.deleteById(id);

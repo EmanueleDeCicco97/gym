@@ -28,7 +28,7 @@ public class CustomerController {
     }
 
     @GET
-    @Path("/{id}")
+    @Path("/customer_id/{id}")
     public Response getCustomerById(@PathParam("id") Long id) {
         try {
             Customer customer = customerService.findById(id);
@@ -46,7 +46,7 @@ public class CustomerController {
     }
 
     @PUT
-    @Path("/{id}")
+    @Path("/customer_id/{id}")
     public Response updateCustomer(@PathParam("id") Long id, @Valid Customer customerDetails) {
         customerDetails.setId(id);
         try {
@@ -58,7 +58,7 @@ public class CustomerController {
     }
 
     @DELETE
-    @Path("/{id}")
+    @Path("/customer_id/{id}")
     public Response deleteCustomer(@PathParam("id") Long id) {
         try {
             if (trainingProgramService.isCustomerAssociated(id)) {
