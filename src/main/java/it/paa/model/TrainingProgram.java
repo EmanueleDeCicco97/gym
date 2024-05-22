@@ -9,7 +9,7 @@ import jakarta.validation.constraints.Positive;
 
 
 @Entity
-@Table(name = "training_program")
+@Table(name = "training_programs")
 @ValidTrainingIntensity
 public class TrainingProgram {
 

@@ -8,7 +8,7 @@ import jakarta.validation.constraints.NotBlank;
 import java.util.List;
 
 @Entity
-@Table(name = "trainer")
+@Table(name = "trainers")
 public class Trainer {
 
     @Id

@@ -11,7 +11,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Entity
-@Table(name = "customer")
+@Table(name = "customers")
 @ValidSubscriptionAge
 public class Customer {
 

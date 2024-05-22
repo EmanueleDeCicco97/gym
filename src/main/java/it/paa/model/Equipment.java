@@ -8,7 +8,7 @@ import jakarta.validation.constraints.Positive;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "equipment")
+@Table(name = "equipments")
 public class Equipment {
 
     @Id
