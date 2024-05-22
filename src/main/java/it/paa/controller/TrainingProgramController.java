@@ -67,10 +67,10 @@ public class TrainingProgramController {
             }
 
             // setto il customer e il trainer nel training program
-            if(customer != null){
+            if (customer != null) {
                 trainingProgram.setAssociatedCustomer(customer);
             }
-            if(trainer!= null){
+            if (trainer != null) {
                 trainingProgram.setAssociatedTrainer(trainer);
             }
 

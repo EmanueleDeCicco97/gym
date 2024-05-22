@@ -23,13 +23,12 @@ public class TrainingProgramService {
         return trainingProgramRepository.findAll(duration, intensity);
     }
 
-    public TrainingProgram findById(Long id)throws IllegalArgumentException {
+    public TrainingProgram findById(Long id) throws IllegalArgumentException {
 
         TrainingProgram trainingProgram = trainingProgramRepository.findById(id);
-        if(trainingProgram != null){
+        if (trainingProgram != null) {
             return trainingProgram;
-        }
-        else {
+        } else {
             throw new IllegalArgumentException("Training Program with id " + id + " not found");
         }
     }
@@ -47,11 +46,11 @@ public class TrainingProgramService {
         // dopo aver recuperato il training program, aggiorno i dati
 
         // se il customer id non è null aggiorno il customer
-        if(trainingProgramDto.getCustomerId()!= null) {
+        if (trainingProgramDto.getCustomerId() != null) {
             existingTrainingProgram.setAssociatedCustomer(customerService.findById(trainingProgramDto.getCustomerId()));
         }
         // se il trainer id non è null aggiorno il trainer
-        if(trainingProgramDto.getTrainerId()!= null) {
+        if (trainingProgramDto.getTrainerId() != null) {
             existingTrainingProgram.setAssociatedTrainer(trainerService.findById(trainingProgramDto.getTrainerId()));
         }
 
@@ -71,6 +70,7 @@ public class TrainingProgramService {
         return existingTrainingProgram;
 
     }
+
     @Transactional
     public TrainingProgram deleteById(Long id) {
         TrainingProgram trainingProgram = trainingProgramRepository.deleteById(id);

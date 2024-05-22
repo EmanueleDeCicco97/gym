@@ -62,7 +62,12 @@ public class EquipmentController {
     @DELETE
     @Path("/{id}")
     public Response deleteEquipment(@PathParam("id") Long id) {
-        equipmentService.deleteById(id);
-        return Response.ok().build();
+        try {
+            equipmentService.deleteById(id);
+            return Response.ok().build();
+
+        } catch (IllegalArgumentException e) {
+            return Response.status(Response.Status.NOT_FOUND).type(MediaType.TEXT_PLAIN).entity(e.getMessage()).build();
+        }
     }
 }
