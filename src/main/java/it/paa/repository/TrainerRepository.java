@@ -81,6 +81,15 @@ public class TrainerRepository {
         return trainer;
     }
 
+    //query di partenza
+    //SELECT t.id AS trainer_id, t.name AS trainer_name, c.id AS customer_id, c.name AS customer_name
+    //FROM trainers t
+    //INNER JOIN training_programs tp ON t.id = tp.trainer_id
+    //INNER JOIN customers c ON tp.customer_id = c.id
+    //GROUP BY t.id, t.name, c.id, c.name
+    //ORDER BY COUNT(tp.id) DESC
+    //LIMIT 3;
+
     //Esercitazione 2: Implementazione di un endpoint per trovare gli allenatori con il maggior numero di clienti e
     // visualizzare i dettagli dei clienti che seguono ciascun allenatore.
     public Map<Trainer, Set<Customer>> findTopTrainerWithMaxClients() {
