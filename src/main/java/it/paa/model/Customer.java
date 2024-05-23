@@ -6,6 +6,7 @@ import it.paa.validation.ValidSubscription;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Past;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -30,6 +31,7 @@ public class Customer {
 
     @NotNull(message = "date of birth cannot be empty")
     @Column(name = "date_of_birth", nullable = false)
+    @Past(message = "date of birth must be in the past")
     private LocalDate dateOfBirth;
 
     @Column(name = "gender")
