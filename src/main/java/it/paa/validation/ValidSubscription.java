@@ -8,13 +8,11 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Constraint(validatedBy = SubscriptionAgeValidator.class)
-@Target({ElementType.TYPE})
+@Constraint(validatedBy = SubscriptionValidator.class)
+@Target({ ElementType.METHOD, ElementType.FIELD, ElementType.ANNOTATION_TYPE, ElementType.PARAMETER, ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ValidSubscriptionAge {
-    String message() default "The age of the customer is not consistent with the type of subscription chosen, only those over 14 years of age can activate subscriptions";
-
+public @interface ValidSubscription {
+    String message() default "Invalid subscription type or age restriction violated, remember ";
     Class<?>[] groups() default {};
-
     Class<? extends Payload>[] payload() default {};
 }

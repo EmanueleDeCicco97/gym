@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ValidTrainingIntensity {
-    String message() default "The intensity of the training is not appropriate for the client";
+    String message() default "The training intensity is not appropriate for clients under 14 or over 60.";
 
     Class<?>[] groups() default {};
 

@@ -49,7 +49,7 @@ public class CustomerService {
         if (customer.getGender() != null && !customer.getGender().isEmpty() && !customer.getGender().isBlank()) {
             existingCustomer.setGender(customer.getGender());
         }
-        if (customer.getActiveSubscription() != null) {
+        if (customer.getActiveSubscription() != null && !customer.getActiveSubscription().isEmpty() && !customer.getActiveSubscription().isBlank()) {
             existingCustomer.setActiveSubscription(customer.getActiveSubscription());
         }
 

@@ -2,7 +2,7 @@ package it.paa.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import it.paa.validation.ValidSubscriptionAge;
+import it.paa.validation.ValidSubscription;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -12,7 +12,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "customers")
-@ValidSubscriptionAge
+@ValidSubscription
 public class Customer {
 
     @Id
@@ -36,7 +36,7 @@ public class Customer {
     private String gender;
 
     @Column(name = "active_subscription")
-    private Boolean activeSubscription;
+    private String activeSubscription;
 
     @OneToMany(mappedBy = "associatedCustomer")
     @JsonBackReference
@@ -78,11 +78,11 @@ public class Customer {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public Boolean getActiveSubscription() {
+    public String getActiveSubscription() {
         return activeSubscription;
     }
 
-    public void setActiveSubscription(Boolean activeSubscription) {
+    public void setActiveSubscription(String activeSubscription) {
         this.activeSubscription = activeSubscription;
     }
 
