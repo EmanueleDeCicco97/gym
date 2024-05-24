@@ -99,6 +99,7 @@ public class TrainerRepository {
         // Recupero la lista di trainer dal db
         List<Trainer> trainerList = entityManager.createQuery("SELECT t FROM Trainer t", Trainer.class)
                 .getResultList();
+
         trainerList.stream()
                 // Filtro i trainer che hanno almeno un programma di allenamento
                 .filter(trainer -> !trainer.getTrainingPrograms().isEmpty())
@@ -119,7 +120,6 @@ public class TrainerRepository {
         // Ritorno la mappa di risultato
         return mapResult;
     }
-
 
 
 }
