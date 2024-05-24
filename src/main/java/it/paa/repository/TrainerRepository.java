@@ -93,32 +93,33 @@ public class TrainerRepository {
     //Esercitazione 2: Implementazione di un endpoint per trovare gli allenatori con il maggior numero di clienti e
     // visualizzare i dettagli dei clienti che seguono ciascun allenatore.
     public Map<Trainer, Set<Customer>> findTopTrainerWithMaxClients() {
-        // creo una mappa di risultato per memorizzare i trainer e i loro clienti
+        // Creo una mappa di risultato per memorizzare i trainer e i loro clienti
         Map<Trainer, Set<Customer>> mapResult = new LinkedHashMap<>();
 
-
-        // recupero la lista di trainer dal db
+        // Recupero la lista di trainer dal db
         List<Trainer> trainerList = entityManager.createQuery("SELECT t FROM Trainer t", Trainer.class)
                 .getResultList();
-
         trainerList.stream()
-                // ordino i trainer in base al numero di programmi di allenamento in ordine decrescente.
+                // Filtro i trainer che hanno almeno un programma di allenamento
+                .filter(trainer -> !trainer.getTrainingPrograms().isEmpty())
+                // Ordino i trainer in base al numero di programmi di allenamento in ordine decrescente
                 .sorted(Comparator.comparingInt(trainer -> -trainer.getTrainingPrograms().size()))
-                // limito il risultato a 3 quindi restituisco i primi 3 trainer con più clienti associati.
+                // Limito il risultato a 3 quindi restituisco i primi 3 trainer con più clienti associati
                 .limit(3)
-                //per ciascuno dei 3 trainer
+                // Per ciascuno dei 3 trainer
                 .forEach(trainer -> {
-                    // recupero una lista di clienti associati al trainer
+                    // Recupero una lista di clienti associati al trainer
                     Set<Customer> customers = trainer.getTrainingPrograms().stream()
                             .map(TrainingProgram::getAssociatedCustomer)
-                            // converto la lista di clienti in un set per eliminare duplicati.
+                            // Converto la lista di clienti in un set per eliminare duplicati
                             .collect(Collectors.toSet());
-                    // aggiungo il trainer e i suoi clienti alla mappa di risultato.
+                    // Aggiungo il trainer e i suoi clienti alla mappa di risultato
                     mapResult.put(trainer, customers);
                 });
-        // ritorno la mappa di risultato.
+        // Ritorno la mappa di risultato
         return mapResult;
     }
+
 
 
 }
