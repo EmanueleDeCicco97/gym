@@ -57,7 +57,7 @@ public class CustomerController {
         if (customerDetails == null) {
             return Response.status(Response.Status.BAD_REQUEST).type(MediaType.TEXT_PLAIN).entity("customer cannot be null").build();
         }
-        customerDetails.setId(id);
+
         try {
             Customer updatedCustomer = customerService.update(id, customerDetails);
             return Response.ok(updatedCustomer).build();
