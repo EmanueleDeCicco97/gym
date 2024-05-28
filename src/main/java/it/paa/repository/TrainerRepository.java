@@ -121,5 +121,38 @@ public class TrainerRepository {
         return mapResult;
     }
 
+//    public Map<Trainer, Set<Customer>> findTopTrainerWithMaxClients() {
+//        String query = "SELECT t, c " +
+//                "FROM Trainer t " +
+//                "JOIN t.trainingPrograms tp " +
+//                "JOIN tp.associatedCustomer c " +
+//                "GROUP BY t, c " +
+//                "ORDER BY COUNT(c) DESC";
+//
+//        TypedQuery<Object[]> typedQuery = entityManager.createQuery(query, Object[].class);
+//
+//
+//        List<Object[]> resultList = typedQuery.getResultList();
+//
+//        Map<Trainer, Set<Customer>> mapResult = new LinkedHashMap<>();
+//
+//        for (Object[] result : resultList) {
+//            Trainer trainer = (Trainer) result[0];
+//            Customer customer = (Customer) result[1];
+//
+//            // Qui possiamo usare una nuova query per ottenere tutte le informazioni del cliente
+//            // usando l'ID del cliente dall'oggetto Customer recuperato
+//            String customerQuery = "SELECT c FROM Customer c WHERE c.id = :customerId";
+//            TypedQuery<Customer> customerTypedQuery = entityManager.createQuery(customerQuery, Customer.class);
+//            customerTypedQuery.setParameter("customerId", customer.getId());
+//            List<Customer> customers = customerTypedQuery.getResultList();
+//
+//            // Aggiungiamo i clienti associati al Trainer corrispondente
+//            mapResult.computeIfAbsent(trainer, k -> new HashSet<>()).addAll(customers);
+//        }
+//
+//        return mapResult;
+//    }
+
 
 }
