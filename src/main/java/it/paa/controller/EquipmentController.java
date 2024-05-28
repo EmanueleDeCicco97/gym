@@ -64,7 +64,7 @@ public class EquipmentController {
                     .entity("Equipment cannot be null")
                     .build();
         }
-        equipmentDetails.setId(id);
+
         try {
             Equipment updatedEquipment = equipmentService.update(id, equipmentDetails);
             return Response.ok(updatedEquipment).build();

@@ -65,7 +65,7 @@ public class TrainerController {
                     .entity("Trainer cannot be null")
                     .build();
         }
-        trainerDetails.setId(id);
+
         try {
             Trainer updatedTrainer = trainerService.update(id, trainerDetails);
             return Response.ok(updatedTrainer).build();
