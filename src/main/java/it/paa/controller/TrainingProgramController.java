@@ -33,7 +33,7 @@ public class TrainingProgramController {
                             @QueryParam("intensity") String intensity) {
         List<TrainingProgram> trainingPrograms = trainingProgramService.findAll(duration, intensity);
         if (trainingPrograms.isEmpty()) {
-            return Response.status(Response.Status.NO_CONTENT).type(MediaType.TEXT_PLAIN).build();
+            return Response.status(Response.Status.NO_CONTENT).build();
         }
         return Response.ok(trainingPrograms).build();
     }
@@ -47,7 +47,7 @@ public class TrainingProgramController {
             return Response.ok(trainingProgram).build();
 
         } catch (NotFoundException e) {
-            return Response.status(Response.Status.NOT_FOUND).type(MediaType.TEXT_PLAIN).entity(e.getMessage()).build();
+            return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
         }
     }
 
@@ -59,7 +59,6 @@ public class TrainingProgramController {
         try {
             if (trainingProgram == null) {
                 return Response.status(Response.Status.BAD_REQUEST)
-                        .type(MediaType.TEXT_PLAIN)
                         .entity("The training program cannot be null.")
                         .build();
             }
@@ -72,7 +71,6 @@ public class TrainingProgramController {
             boolean isAlreadyAssociated = trainingProgramService.isCustomerAssociated(customerId);
             if (isAlreadyAssociated) {
                 return Response.status(Response.Status.CONFLICT)
-                        .type(MediaType.TEXT_PLAIN)
                         .entity("The client is already associated with a trainer.")
                         .build();
             }
@@ -90,7 +88,7 @@ public class TrainingProgramController {
 
         } catch (NotFoundException e) {
 
-            return Response.status(Response.Status.NOT_FOUND).type(MediaType.TEXT_PLAIN).entity(e.getMessage()).build();
+            return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
         }
     }
 
@@ -100,7 +98,6 @@ public class TrainingProgramController {
         try {
             if (trainingProgramDto == null) {
                 return Response.status(Response.Status.BAD_REQUEST)
-                        .type(MediaType.TEXT_PLAIN)
                         .entity("The training program cannot be null.")
                         .build();
             }
@@ -109,11 +106,10 @@ public class TrainingProgramController {
             return Response.ok(updatedTrainingProgram).build();
 
         } catch (NotFoundException e) {
-            return Response.status(Response.Status.NOT_FOUND).type(MediaType.TEXT_PLAIN).entity(e.getMessage()).build();
+            return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
 
         } catch (ArcUndeclaredThrowableException e) {
             return Response.status(Response.Status.NOT_FOUND)
-                    .type(MediaType.TEXT_PLAIN)
                     .entity("the intensity can only be easy, medium and hard")
                     .build();
 
@@ -128,7 +124,7 @@ public class TrainingProgramController {
             return Response.ok().build();
 
         } catch (NotFoundException e) {
-            return Response.status(Response.Status.NOT_FOUND).type(MediaType.TEXT_PLAIN).entity(e.getMessage()).build();
+            return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
         }
     }
 

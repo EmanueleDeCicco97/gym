@@ -1,6 +1,7 @@
 package it.paa.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import it.paa.validation.ValidSubscription;
 import jakarta.persistence.*;
@@ -44,8 +45,7 @@ public class Customer {
     private String activeSubscription;
 
     @OneToMany(mappedBy = "associatedCustomer")
-    @JsonBackReference
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    @JsonIgnore
     private List<TrainingProgram> trainingPrograms;
 
     public Customer() {

@@ -24,21 +24,19 @@ public class TrainerController {
         List<Trainer> trainerList = trainerService.findAll(name, specialization);
         if (trainerList.isEmpty()) {
             return Response.status(Response.Status.NO_CONTENT)
-                    .type(MediaType.TEXT_PLAIN)
                     .build();
         }
         return Response.ok(trainerList).build();
     }
 
     @GET
-    @Path("/trainer_id/{id}")
+    @Path("/{id}")
     public Response getTrainerById(@PathParam("id") Long id) {
         try {
             Trainer trainer = trainerService.findById(id);
             return Response.ok(trainer).build();
         } catch (NotFoundException e) {
             return Response.status(Response.Status.NOT_FOUND)
-                    .type(MediaType.TEXT_PLAIN)
                     .entity(e.getMessage())
                     .build();
         }
@@ -48,7 +46,6 @@ public class TrainerController {
     public Response createTrainer(@Valid Trainer trainer) {
         if (trainer == null) {
             return Response.status(Response.Status.BAD_REQUEST)
-                    .type(MediaType.TEXT_PLAIN)
                     .entity("Trainer cannot be null")
                     .build();
         }
@@ -57,11 +54,10 @@ public class TrainerController {
     }
 
     @PUT
-    @Path("/trainer_id/{id}")
+    @Path("/{id}")
     public Response updateTrainer(@PathParam("id") Long id, @Valid Trainer trainerDetails) {
         if (trainerDetails == null) {
             return Response.status(Response.Status.BAD_REQUEST)
-                    .type(MediaType.TEXT_PLAIN)
                     .entity("Trainer cannot be null")
                     .build();
         }
@@ -71,14 +67,13 @@ public class TrainerController {
             return Response.ok(updatedTrainer).build();
         } catch (NotFoundException e) {
             return Response.status(Response.Status.NOT_FOUND)
-                    .type(MediaType.TEXT_PLAIN)
                     .entity(e.getMessage())
                     .build();
         }
     }
 
     @DELETE
-    @Path("/trainer_id/{id}")
+    @Path("/{id}")
     public Response deleteTrainer(@PathParam("id") Long id) {
         try {
             trainerService.deleteById(id);
@@ -86,7 +81,6 @@ public class TrainerController {
 
         } catch (NotFoundException exception) {
             return Response.status(Response.Status.NOT_FOUND)
-                    .type(MediaType.TEXT_PLAIN)
                     .entity(exception.getMessage())
                     .build();
         }

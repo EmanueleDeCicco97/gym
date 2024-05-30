@@ -1,6 +1,7 @@
 package it.paa.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -32,8 +33,7 @@ public class Trainer {
     private String specialization;
 
     @OneToMany(mappedBy = "associatedTrainer")
-    @JsonBackReference
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    @JsonIgnore
     private List<TrainingProgram> trainingPrograms;
 
     @Column(name = "work_hours")

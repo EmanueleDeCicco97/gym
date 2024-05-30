@@ -41,8 +41,6 @@ public class TrainingProgram {
 
     @ManyToOne
     @JoinColumn(name = "trainer_id")
-    @JsonManagedReference
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Trainer associatedTrainer;
 
     public TrainingProgram() {
