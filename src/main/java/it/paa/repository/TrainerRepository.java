@@ -8,6 +8,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
+import jakarta.ws.rs.NotFoundException;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -51,7 +52,7 @@ public class TrainerRepository {
     public Trainer findById(Long id) {
         Trainer trainer = entityManager.find(Trainer.class, id);
         if (trainer == null) {
-            throw new IllegalArgumentException("Trainer with id " + id + " not found");
+            throw new NotFoundException("Trainer with id " + id + " not found");
         }
         return trainer;
     }

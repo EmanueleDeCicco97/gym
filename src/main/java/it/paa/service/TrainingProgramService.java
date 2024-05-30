@@ -6,6 +6,7 @@ import it.paa.repository.TrainingProgramRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import jakarta.ws.rs.NotFoundException;
 
 import java.util.List;
 
@@ -23,13 +24,13 @@ public class TrainingProgramService {
         return trainingProgramRepository.findAll(duration, intensity);
     }
 
-    public TrainingProgram findById(Long id) throws IllegalArgumentException {
+    public TrainingProgram findById(Long id) throws NotFoundException {
 
         TrainingProgram trainingProgram = trainingProgramRepository.findById(id);
         if (trainingProgram != null) {
             return trainingProgram;
         } else {
-            throw new IllegalArgumentException("Training Program with id " + id + " not found");
+            throw new NotFoundException("Training Program with id " + id + " not found");
         }
     }
 
@@ -45,27 +46,16 @@ public class TrainingProgramService {
 
         // dopo aver recuperato il training program, aggiorno i dati
 
-        // se il customer id non è null aggiorno il customer
-        if (trainingProgramDto.getCustomerId() != null) {
-            existingTrainingProgram.setAssociatedCustomer(customerService.findById(trainingProgramDto.getCustomerId()));
-        }
-        // se il trainer id non è null aggiorno il trainer
-        if (trainingProgramDto.getTrainerId() != null) {
-            existingTrainingProgram.setAssociatedTrainer(trainerService.findById(trainingProgramDto.getTrainerId()));
-        }
+        existingTrainingProgram.setAssociatedCustomer(customerService.findById(trainingProgramDto.getCustomerId()));
 
-        // se il training type non è vuoto aggiorno il training type
-        if (trainingProgramDto.getTrainingType() != null && !trainingProgramDto.getTrainingType().isEmpty() && !trainingProgramDto.getTrainingType().isBlank()) {
-            existingTrainingProgram.setTrainingType(trainingProgramDto.getTrainingType());
-        }
-        // se la durata non è nulla aggiorno la durata
-        if (trainingProgramDto.getDuration() != null && trainingProgramDto.getDuration() > 0) {
-            existingTrainingProgram.setDuration(trainingProgramDto.getDuration());
-        }
-        // se l'intensità non è vuota aggiorno l'intensità
-        if (trainingProgramDto.getIntensity() != null && !trainingProgramDto.getIntensity().isEmpty() && !trainingProgramDto.getIntensity().isBlank()) {
-            existingTrainingProgram.setIntensity(trainingProgramDto.getIntensity());
-        }
+        existingTrainingProgram.setAssociatedTrainer(trainerService.findById(trainingProgramDto.getTrainerId()));
+
+        existingTrainingProgram.setTrainingType(trainingProgramDto.getTrainingType());
+
+        existingTrainingProgram.setDuration(trainingProgramDto.getDuration());
+
+        existingTrainingProgram.setIntensity(trainingProgramDto.getIntensity());
+
         trainingProgramRepository.update(existingTrainingProgram);
         return existingTrainingProgram;
 
@@ -76,7 +66,7 @@ public class TrainingProgramService {
         TrainingProgram trainingProgram = trainingProgramRepository.deleteById(id);
 
         if (trainingProgram == null) {
-            throw new IllegalArgumentException("Training Program with id " + id + " not found");
+            throw new NotFoundException("Training Program with id " + id + " not found");
         }
 
         return trainingProgram;

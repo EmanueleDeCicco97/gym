@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 
 import java.util.List;
 
@@ -34,6 +35,7 @@ public class Trainer {
     private List<TrainingProgram> trainingPrograms;
 
     @Column(name = "work_hours")
+    @NotEmpty(message = "workHours cannot be empty")
     private Integer workHours;
 
     public Trainer() {

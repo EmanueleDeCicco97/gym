@@ -5,6 +5,7 @@ import it.paa.repository.CustomerRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import jakarta.ws.rs.NotFoundException;
 
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class CustomerService {
     public Customer findById(Long id) {
         Customer customer = customerRepository.findById(id);
         if (customer == null) {
-            throw new IllegalArgumentException("Customer with id " + id + " not found");
+            throw new NotFoundException("Customer with id " + id + " not found");
         }
         return customer;
     }
@@ -37,21 +38,16 @@ public class CustomerService {
         Customer existingCustomer = findById(id);
 
         // dopo aver recuperato il customer, aggiorno i dati
-        if (customer.getName() != null && !customer.getName().isEmpty() && !customer.getName().isBlank()) {
-            existingCustomer.setName(customer.getName());
-        }
-        if (customer.getSurname() != null && !customer.getSurname().isEmpty() && !customer.getSurname().isBlank()) {
-            existingCustomer.setSurname(customer.getSurname());
-        }
-        if (customer.getDateOfBirth() != null) {
-            existingCustomer.setDateOfBirth(customer.getDateOfBirth());
-        }
-        if (customer.getGender() != null && !customer.getGender().isEmpty() && !customer.getGender().isBlank()) {
-            existingCustomer.setGender(customer.getGender());
-        }
-        if (customer.getActiveSubscription() != null && !customer.getActiveSubscription().isEmpty() && !customer.getActiveSubscription().isBlank()) {
-            existingCustomer.setActiveSubscription(customer.getActiveSubscription());
-        }
+        existingCustomer.setName(customer.getName());
+
+        existingCustomer.setSurname(customer.getSurname());
+
+        existingCustomer.setDateOfBirth(customer.getDateOfBirth());
+
+        existingCustomer.setGender(customer.getGender());
+
+        existingCustomer.setActiveSubscription(customer.getActiveSubscription());
+
 
         // effettuo il merge sul customer esistente
         return customerRepository.update(existingCustomer);
@@ -61,7 +57,7 @@ public class CustomerService {
     public Customer deleteById(Long id) {
         Customer customer = customerRepository.deleteById(id);
         if (customer == null) {
-            throw new IllegalArgumentException("Customer with id " + id + " not found");
+            throw new NotFoundException("Customer with id " + id + " not found");
         }
         return customer;
     }

@@ -6,6 +6,7 @@ import it.paa.repository.TrainerRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import jakarta.ws.rs.NotFoundException;
 
 import java.util.*;
 
@@ -23,7 +24,7 @@ public class TrainerService {
     public Trainer findById(Long id) {
         Trainer trainer = trainerRepository.findById(id);
         if (trainer == null) {
-            throw new IllegalArgumentException("Trainer with id " + id + " not found");
+            throw new NotFoundException("Trainer with id " + id + " not found");
         }
         return trainer;
     }
@@ -40,22 +41,13 @@ public class TrainerService {
         Trainer existingTrainer = findById(id);
 
         // dopo aver recuperato il trainer, aggiorno i dati
-        // se il nome non è vuoto lo aggiorno
-        if (trainer.getName() != null && !trainer.getName().isEmpty() && !trainer.getName().isBlank()) {
-            existingTrainer.setName(trainer.getName());
-        }
-        // se il cognome non è vuoto lo aggiorno
-        if (trainer.getSurname() != null && !trainer.getSurname().isEmpty() && !trainer.getSurname().isBlank()) {
-            existingTrainer.setSurname(trainer.getSurname());
-        }
-        // se la specializzazione non è vuota la aggiorno
-        if (trainer.getSpecialization() != null && !trainer.getSpecialization().isEmpty() && !trainer.getSpecialization().isBlank()) {
-            existingTrainer.setSpecialization(trainer.getSpecialization());
-        }
-        // se le ore di lavoro non sono vuote le aggiorno
-        if (trainer.getWorkHours() != null && trainer.getWorkHours() > 0) {
-            existingTrainer.setWorkHours(trainer.getWorkHours());
-        }
+        existingTrainer.setName(trainer.getName());
+
+        existingTrainer.setSurname(trainer.getSurname());
+
+        existingTrainer.setSpecialization(trainer.getSpecialization());
+
+        existingTrainer.setWorkHours(trainer.getWorkHours());
 
         // effettuo il merge sull' trainer esistente
         return trainerRepository.update(existingTrainer);
@@ -66,13 +58,13 @@ public class TrainerService {
     public Trainer deleteById(Long id) {
 
         if (trainingProgramService.isTrainerAssociated(id)) {
-            throw new IllegalArgumentException("Trainer with id " + id + " is associated with a training program and cannot be deleted");
+            throw new NotFoundException("Trainer with id " + id + " is associated with a training program and cannot be deleted");
         }
 
         Trainer trainer = trainerRepository.deleteById(id);
 
         if (trainer == null) {
-            throw new IllegalArgumentException("Trainer with id " + id + " not found");
+            throw new NotFoundException("Trainer with id " + id + " not found");
         }
         return trainer;
     }

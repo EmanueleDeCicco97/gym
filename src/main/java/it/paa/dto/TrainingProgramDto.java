@@ -1,15 +1,22 @@
 package it.paa.dto;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
 
 public class TrainingProgramDto {
-
+    @NotBlank(message = "training type cannot be empty")
     private String trainingType;
+
     @Positive(message = "The duration must be positive.")
     private Integer duration;
 
+    @NotBlank(message = "training type cannot be empty")
     private String intensity;
+
+    @NotBlank(message = "customer id cannot be empty")
     private Long customerId;
+
+    @NotBlank(message = "trainer id cannot be empty")
     private Long trainerId;
 
     public TrainingProgramDto() {

@@ -46,7 +46,7 @@ public class TrainingProgramController {
 
             return Response.ok(trainingProgram).build();
 
-        } catch (IllegalArgumentException e) {
+        } catch (NotFoundException e) {
             return Response.status(Response.Status.NOT_FOUND).type(MediaType.TEXT_PLAIN).entity(e.getMessage()).build();
         }
     }
@@ -88,7 +88,7 @@ public class TrainingProgramController {
             TrainingProgram createdTrainingProgram = trainingProgramService.save(trainingProgram);
             return Response.status(Response.Status.CREATED).entity(createdTrainingProgram).build();
 
-        } catch (IllegalArgumentException e) {
+        } catch (NotFoundException e) {
 
             return Response.status(Response.Status.NOT_FOUND).type(MediaType.TEXT_PLAIN).entity(e.getMessage()).build();
         }
@@ -106,7 +106,7 @@ public class TrainingProgramController {
             }
             TrainingProgram updatedTrainingProgram = trainingProgramService.update(id, trainingProgramDto);
             return Response.ok(updatedTrainingProgram).build();
-        } catch (IllegalArgumentException e) {
+        } catch (NotFoundException e) {
             return Response.status(Response.Status.NOT_FOUND).type(MediaType.TEXT_PLAIN).entity(e.getMessage()).build();
 
         } catch (ArcUndeclaredThrowableException e) {
@@ -125,7 +125,7 @@ public class TrainingProgramController {
             trainingProgramService.deleteById(id);
             return Response.ok().build();
 
-        } catch (IllegalArgumentException e) {
+        } catch (NotFoundException e) {
             return Response.status(Response.Status.NOT_FOUND).type(MediaType.TEXT_PLAIN).entity(e.getMessage()).build();
         }
     }

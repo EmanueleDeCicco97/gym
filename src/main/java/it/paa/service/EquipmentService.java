@@ -5,6 +5,7 @@ import it.paa.repository.EquipmentRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import jakarta.ws.rs.NotFoundException;
 
 import java.util.List;
 
@@ -22,7 +23,7 @@ public class EquipmentService {
     public Equipment findById(Long id) {
         Equipment equipment = equipmentRepository.findById(id);
         if (equipment == null) {
-            throw new IllegalArgumentException("Equipment with id " + id + " not found");
+            throw new NotFoundException("Equipment with id " + id + " not found");
         }
         return equipment;
     }
@@ -41,26 +42,17 @@ public class EquipmentService {
         // controllo se l'equipment esiste
         Equipment existingEquipment = findById(id);
 
-        // dopo aver recuperato l'equipment, aggiorno i dati
-        // se il name non è vuoto aggiorno il name
-        if (!equipment.getName().isEmpty() && !equipment.getName().isBlank()) {
-            existingEquipment.setName(equipment.getName());
-        }
+        existingEquipment.setName(equipment.getName());
 
-        // se la descrizione non è vuota aggiorno la descrizione
-        if (!equipment.getDescription().isEmpty() && !equipment.getDescription().isBlank()) {
-            existingEquipment.setDescription(equipment.getDescription());
-        }
-        // se l'availability non è null aggiorno l'availability
-        if (equipment.getAvailability() != null) {
-            existingEquipment.setAvailability(equipment.getAvailability());
-        }
-        if (equipment.getPurchaseDate() != null) {
-            existingEquipment.setPurchaseDate(equipment.getPurchaseDate());
-        }
+        existingEquipment.setDescription(equipment.getDescription());
 
-        equipmentRepository.update(existingEquipment);
+        existingEquipment.setAvailability(equipment.getAvailability());
+
+        existingEquipment.setPurchaseDate(equipment.getPurchaseDate());
+
         //effettuo il merge sull' equipment esistente
+        equipmentRepository.update(existingEquipment);
+
         return existingEquipment;
     }
 
@@ -70,7 +62,7 @@ public class EquipmentService {
         if (equipment != null) {
             return equipment;
         } else {
-            throw new IllegalArgumentException("Equipment with id " + id + " not found");
+            throw new NotFoundException("Equipment with id " + id + " not found");
         }
     }
 

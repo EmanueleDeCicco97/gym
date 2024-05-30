@@ -35,7 +35,7 @@ public class EquipmentController {
         try {
             Equipment equipment = equipmentService.findById(id);
             return Response.ok(equipment).build();
-        } catch (IllegalArgumentException e) {
+        } catch (NotFoundException e) {
             return Response.status(Response.Status.NOT_FOUND)
                     .type(MediaType.TEXT_PLAIN)
                     .entity(e.getMessage())
@@ -68,7 +68,7 @@ public class EquipmentController {
         try {
             Equipment updatedEquipment = equipmentService.update(id, equipmentDetails);
             return Response.ok(updatedEquipment).build();
-        } catch (IllegalArgumentException e) {
+        } catch (NotFoundException e) {
             return Response.status(Response.Status.NOT_FOUND)
                     .type(MediaType.TEXT_PLAIN)
                     .entity(e.getMessage())
@@ -83,7 +83,7 @@ public class EquipmentController {
             equipmentService.deleteById(id);
             return Response.ok().build();
 
-        } catch (IllegalArgumentException e) {
+        } catch (NotFoundException e) {
             return Response.status(Response.Status.NOT_FOUND).type(MediaType.TEXT_PLAIN).entity(e.getMessage()).build();
         }
     }

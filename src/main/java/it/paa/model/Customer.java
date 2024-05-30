@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import it.paa.validation.ValidSubscription;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
 
@@ -35,9 +36,11 @@ public class Customer {
     private LocalDate dateOfBirth;
 
     @Column(name = "gender")
+    @NotEmpty(message = "gender cannot be empty")
     private String gender;
 
     @Column(name = "active_subscription")
+    @NotEmpty(message = "active subscription cannot be empty")
     private String activeSubscription;
 
     @OneToMany(mappedBy = "associatedCustomer")

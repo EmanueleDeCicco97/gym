@@ -37,7 +37,7 @@ public class CustomerController {
             Customer customer = customerService.findById(id);
             return Response.ok(customer).build();
 
-        } catch (IllegalArgumentException e) {
+        } catch (NotFoundException e) {
             return Response.status(Response.Status.NOT_FOUND).type(MediaType.TEXT_PLAIN).entity(e.getMessage()).build();
         }
     }
@@ -61,7 +61,7 @@ public class CustomerController {
         try {
             Customer updatedCustomer = customerService.update(id, customerDetails);
             return Response.ok(updatedCustomer).build();
-        } catch (IllegalArgumentException e) {
+        } catch (NotFoundException e) {
             return Response.status(Response.Status.NOT_FOUND).type(MediaType.TEXT_PLAIN).entity(e.getMessage()).build();
         }
     }
@@ -71,14 +71,14 @@ public class CustomerController {
     public Response deleteCustomer(@PathParam("id") Long id) {
         try {
             if (trainingProgramService.isCustomerAssociated(id)) {
-                throw new IllegalArgumentException("Customer with id " + id + " is associated with a training program and cannot be deleted");
+                throw new NotFoundException("Customer with id " + id + " is associated with a training program and cannot be deleted");
             }
 
             customerService.deleteById(id);
 
             return Response.ok().build();
 
-        } catch (IllegalArgumentException e) {
+        } catch (NotFoundException e) {
             return Response.status(Response.Status.NOT_FOUND).type(MediaType.TEXT_PLAIN).entity(e.getMessage()).build();
 
         }

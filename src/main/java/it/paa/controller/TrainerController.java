@@ -36,7 +36,7 @@ public class TrainerController {
         try {
             Trainer trainer = trainerService.findById(id);
             return Response.ok(trainer).build();
-        } catch (IllegalArgumentException e) {
+        } catch (NotFoundException e) {
             return Response.status(Response.Status.NOT_FOUND)
                     .type(MediaType.TEXT_PLAIN)
                     .entity(e.getMessage())
@@ -69,7 +69,7 @@ public class TrainerController {
         try {
             Trainer updatedTrainer = trainerService.update(id, trainerDetails);
             return Response.ok(updatedTrainer).build();
-        } catch (IllegalArgumentException e) {
+        } catch (NotFoundException e) {
             return Response.status(Response.Status.NOT_FOUND)
                     .type(MediaType.TEXT_PLAIN)
                     .entity(e.getMessage())
@@ -84,7 +84,7 @@ public class TrainerController {
             trainerService.deleteById(id);
             return Response.ok().build();
 
-        } catch (IllegalArgumentException exception) {
+        } catch (NotFoundException exception) {
             return Response.status(Response.Status.NOT_FOUND)
                     .type(MediaType.TEXT_PLAIN)
                     .entity(exception.getMessage())

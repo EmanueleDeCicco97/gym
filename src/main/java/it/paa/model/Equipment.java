@@ -29,6 +29,7 @@ public class Equipment {
     private Integer availability;
 
     @Column(name = "purchase_date")
+    @NotBlank(message = "Purchase date cannot be")
     private LocalDate purchaseDate;
 
     public Equipment() {

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import it.paa.validation.ValidIntensity;
 import it.paa.validation.ValidTrainingIntensity;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Positive;
 
 
@@ -19,6 +20,7 @@ public class TrainingProgram {
     private Long id;
 
     @Column(name = "training_type")
+    @NotEmpty(message = "training type cannot be empty")
     private String trainingType;
 
     @Positive(message = "duration cannot be negative")
