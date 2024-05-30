@@ -57,11 +57,6 @@ public class TrainingProgramController {
                          @PathParam("customerId") Long customerId,
                          @Valid TrainingProgram trainingProgram) {
         try {
-            if (trainingProgram == null) {
-                return Response.status(Response.Status.BAD_REQUEST)
-                        .entity("The training program cannot be null.")
-                        .build();
-            }
 
             // cerco nel db il customer e il trainer in base all'id
             Customer customer = customerService.findById(customerId);
@@ -96,11 +91,6 @@ public class TrainingProgramController {
     @Path("/{id}")
     public Response update(@PathParam("id") Long id, @Valid TrainingProgramDto trainingProgramDto) {
         try {
-            if (trainingProgramDto == null) {
-                return Response.status(Response.Status.BAD_REQUEST)
-                        .entity("The training program cannot be null.")
-                        .build();
-            }
 
             TrainingProgram updatedTrainingProgram = trainingProgramService.update(id, trainingProgramDto);
             return Response.ok(updatedTrainingProgram).build();

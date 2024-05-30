@@ -44,11 +44,7 @@ public class TrainerController {
 
     @POST
     public Response createTrainer(@Valid Trainer trainer) {
-        if (trainer == null) {
-            return Response.status(Response.Status.BAD_REQUEST)
-                    .entity("Trainer cannot be null")
-                    .build();
-        }
+
         Trainer savedTrainer = trainerService.save(trainer);
         return Response.status(Response.Status.CREATED).entity(savedTrainer).build();
     }
@@ -56,11 +52,6 @@ public class TrainerController {
     @PUT
     @Path("/{id}")
     public Response updateTrainer(@PathParam("id") Long id, @Valid Trainer trainerDetails) {
-        if (trainerDetails == null) {
-            return Response.status(Response.Status.BAD_REQUEST)
-                    .entity("Trainer cannot be null")
-                    .build();
-        }
 
         try {
             Trainer updatedTrainer = trainerService.update(id, trainerDetails);

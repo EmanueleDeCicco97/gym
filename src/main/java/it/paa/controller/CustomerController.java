@@ -44,9 +44,7 @@ public class CustomerController {
 
     @POST
     public Response createCustomer(@Valid Customer customer) {
-        if (customer == null) {
-            return Response.status(Response.Status.BAD_REQUEST).entity("customer cannot be null").build();
-        }
+
         Customer savedCustomer = customerService.save(customer);
         return Response.status(Response.Status.CREATED).entity(savedCustomer).build();
     }
@@ -54,9 +52,6 @@ public class CustomerController {
     @PUT
     @Path("/{id}")
     public Response updateCustomer(@PathParam("id") Long id, @Valid Customer customerDetails) {
-        if (customerDetails == null) {
-            return Response.status(Response.Status.BAD_REQUEST).entity("customer cannot be null").build();
-        }
 
         try {
             Customer updatedCustomer = customerService.update(id, customerDetails);
