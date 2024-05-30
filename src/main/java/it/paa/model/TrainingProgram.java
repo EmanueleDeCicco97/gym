@@ -1,6 +1,5 @@
 package it.paa.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import it.paa.validation.ValidIntensity;
 import it.paa.validation.ValidTrainingIntensity;
@@ -35,12 +34,12 @@ public class TrainingProgram {
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
-    @JsonManagedReference
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Customer associatedCustomer;
 
     @ManyToOne
     @JoinColumn(name = "trainer_id")
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Trainer associatedTrainer;
 
     public TrainingProgram() {
