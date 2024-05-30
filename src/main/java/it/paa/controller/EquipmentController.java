@@ -1,5 +1,6 @@
 package it.paa.controller;
 
+import it.paa.util.ErrorMessage;
 import it.paa.model.Equipment;
 import it.paa.service.EquipmentService;
 import jakarta.inject.Inject;
@@ -36,7 +37,7 @@ public class EquipmentController {
             return Response.ok(equipment).build();
         } catch (NotFoundException e) {
             return Response.status(Response.Status.NOT_FOUND)
-                    .entity(e.getMessage())
+                    .entity(new ErrorMessage(e.getMessage()))
                     .build();
         }
     }
@@ -56,7 +57,7 @@ public class EquipmentController {
             return Response.ok(updatedEquipment).build();
         } catch (NotFoundException e) {
             return Response.status(Response.Status.NOT_FOUND)
-                    .entity(e.getMessage())
+                    .entity(new ErrorMessage(e.getMessage()))
                     .build();
         }
     }
@@ -69,7 +70,7 @@ public class EquipmentController {
             return Response.ok().build();
 
         } catch (NotFoundException e) {
-            return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
+            return Response.status(Response.Status.NOT_FOUND).entity(new ErrorMessage(e.getMessage())).build();
         }
     }
 }

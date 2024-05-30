@@ -1,5 +1,6 @@
 package it.paa.controller;
 
+import it.paa.util.ErrorMessage;
 import it.paa.service.CustomerService;
 import it.paa.service.TrainingProgramService;
 import jakarta.inject.Inject;
@@ -38,7 +39,8 @@ public class CustomerController {
             return Response.ok(customer).build();
 
         } catch (NotFoundException e) {
-            return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
+
+            return Response.status(Response.Status.NOT_FOUND).entity(new ErrorMessage(e.getMessage())).build();
         }
     }
 
@@ -57,7 +59,7 @@ public class CustomerController {
             Customer updatedCustomer = customerService.update(id, customerDetails);
             return Response.ok(updatedCustomer).build();
         } catch (NotFoundException e) {
-            return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
+            return Response.status(Response.Status.NOT_FOUND).entity(new ErrorMessage(e.getMessage())).build();
         }
     }
 
@@ -74,7 +76,7 @@ public class CustomerController {
             return Response.ok().build();
 
         } catch (NotFoundException e) {
-            return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
+            return Response.status(Response.Status.NOT_FOUND).entity(new ErrorMessage(e.getMessage())).build();
 
         }
 

@@ -1,6 +1,6 @@
 package it.paa.controller;
 
-import io.quarkus.arc.ArcUndeclaredThrowableException;
+import it.paa.util.ErrorMessage;
 import it.paa.model.Trainer;
 import it.paa.service.TrainerService;
 import jakarta.inject.Inject;
@@ -37,7 +37,7 @@ public class TrainerController {
             return Response.ok(trainer).build();
         } catch (NotFoundException e) {
             return Response.status(Response.Status.NOT_FOUND)
-                    .entity(e.getMessage())
+                    .entity(new ErrorMessage(e.getMessage()))
                     .build();
         }
     }
@@ -58,7 +58,7 @@ public class TrainerController {
             return Response.ok(updatedTrainer).build();
         } catch (NotFoundException e) {
             return Response.status(Response.Status.NOT_FOUND)
-                    .entity(e.getMessage())
+                    .entity(new ErrorMessage(e.getMessage()))
                     .build();
         }
     }
@@ -70,9 +70,9 @@ public class TrainerController {
             trainerService.deleteById(id);
             return Response.ok().build();
 
-        } catch (NotFoundException exception) {
+        } catch (NotFoundException e) {
             return Response.status(Response.Status.NOT_FOUND)
-                    .entity(exception.getMessage())
+                    .entity(new ErrorMessage(e.getMessage()))
                     .build();
         }
     }

@@ -1,6 +1,7 @@
 package it.paa.controller;
 
 import io.quarkus.arc.ArcUndeclaredThrowableException;
+import it.paa.util.ErrorMessage;
 import it.paa.dto.TrainingProgramDto;
 import it.paa.model.Customer;
 import it.paa.model.Trainer;
@@ -66,7 +67,7 @@ public class TrainingProgramController {
             boolean isAlreadyAssociated = trainingProgramService.isCustomerAssociated(customerId);
             if (isAlreadyAssociated) {
                 return Response.status(Response.Status.CONFLICT)
-                        .entity("The client is already associated with a trainer.")
+                        .entity(new ErrorMessage("The client is already associated with a trainer."))
                         .build();
             }
 
@@ -83,7 +84,7 @@ public class TrainingProgramController {
 
         } catch (NotFoundException e) {
 
-            return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
+            return Response.status(Response.Status.NOT_FOUND).entity(new ErrorMessage(e.getMessage())).build();
         }
     }
 
@@ -96,7 +97,7 @@ public class TrainingProgramController {
             return Response.ok(updatedTrainingProgram).build();
 
         } catch (NotFoundException e) {
-            return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
+            return Response.status(Response.Status.NOT_FOUND).entity(new ErrorMessage(e.getMessage())).build();
 
         } catch (ArcUndeclaredThrowableException e) {
             return Response.status(Response.Status.NOT_FOUND)
@@ -114,7 +115,7 @@ public class TrainingProgramController {
             return Response.ok().build();
 
         } catch (NotFoundException e) {
-            return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
+            return Response.status(Response.Status.NOT_FOUND).entity(new ErrorMessage(e.getMessage())).build();
         }
     }
 
