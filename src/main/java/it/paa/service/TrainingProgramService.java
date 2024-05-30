@@ -45,7 +45,6 @@ public class TrainingProgramService {
         TrainingProgram existingTrainingProgram = findById(id);
 
         // dopo aver recuperato il training program, aggiorno i dati
-
         existingTrainingProgram.setAssociatedCustomer(customerService.findById(trainingProgramDto.getCustomerId()));
 
         existingTrainingProgram.setAssociatedTrainer(trainerService.findById(trainingProgramDto.getTrainerId()));

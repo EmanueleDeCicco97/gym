@@ -36,7 +36,7 @@ public class Customer {
     private LocalDate dateOfBirth;
 
     @Column(name = "gender")
-    @NotEmpty(message = "gender cannot be empty")
+    @NotBlank(message = "gender cannot be empty")
     private String gender;
 
     @Column(name = "active_subscription")

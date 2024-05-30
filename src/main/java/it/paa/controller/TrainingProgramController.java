@@ -39,7 +39,7 @@ public class TrainingProgramController {
     }
 
     @GET
-    @Path("/training_program_id/{id}")
+    @Path("/{id}")
     public Response findById(@PathParam("id") Long id) {
         try {
             TrainingProgram trainingProgram = trainingProgramService.findById(id);
@@ -95,7 +95,7 @@ public class TrainingProgramController {
     }
 
     @PUT
-    @Path("/training_program_id/{id}")
+    @Path("/{id}")
     public Response update(@PathParam("id") Long id, @Valid TrainingProgramDto trainingProgramDto) {
         try {
             if (trainingProgramDto == null) {
@@ -104,8 +104,10 @@ public class TrainingProgramController {
                         .entity("The training program cannot be null.")
                         .build();
             }
+
             TrainingProgram updatedTrainingProgram = trainingProgramService.update(id, trainingProgramDto);
             return Response.ok(updatedTrainingProgram).build();
+
         } catch (NotFoundException e) {
             return Response.status(Response.Status.NOT_FOUND).type(MediaType.TEXT_PLAIN).entity(e.getMessage()).build();
 
@@ -119,7 +121,7 @@ public class TrainingProgramController {
     }
 
     @DELETE
-    @Path("/training_program_id/{id}")
+    @Path("/{id}")
     public Response deleteById(@PathParam("id") Long id) {
         try {
             trainingProgramService.deleteById(id);
